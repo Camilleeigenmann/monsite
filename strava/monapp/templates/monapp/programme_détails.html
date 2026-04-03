@@ -1,0 +1,21 @@
+{% extends 'monapp/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+   <link rel="stylesheet" href="{% static 'monapp/programme_détails.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>{{programme.titre}}</h1>
+
+<div> But : {{programme.but}}</div>
+<br>
+<div>Description :{{programme.description}}</div>
+<br>
+<div> Nombre d'exercices :{{programme.nombre_exercices}}</div>
+<br>
+<div> Ce programme a une durée d'environ {{programme.durée}} heures</div>
+{% endblock %}
+
+
+   

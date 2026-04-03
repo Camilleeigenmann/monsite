@@ -1,10 +1,15 @@
+{% extends 'monapp/base.html' %}
 {% load static %}
-<html>
-    <head>
-        <link rel="stylesheet" href="{% static 'monapp/accueil.css' %}">
-    </head>
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'monapp/accueil.css' %}">
+{% endblock %}
 
-    <body>
-        <p> Voici mon site</p>
-    </body>
-</html>
+{% block content %}
+        <h1>Utilisateurs :</h1>
+        <ul>
+            {% for utilisateur in utilisateurs %}
+            <li>{{utilisateur.prénom}} {{utilisateur.nom}}</li>
+            {% endfor %}
+        </ul>
+ {% endblock %}
+    
