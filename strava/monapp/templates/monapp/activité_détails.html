@@ -1,0 +1,20 @@
+{% extends 'monapp/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'monapp/activité_détails.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Activité du {{activité.date}}</h1>
+<div>{{activité.description}}</div>
+<br>
+<div><a href="{% url 'programme-détails' programme.id %}">Vous avez fait ce programme : {{programme.titre}}</a></div>
+<br>
+<div>Cette activité a duré {{activité.durée}} heures</div>
+<br><br>
+<a href="{% url 'liste-activités' utilisateur.id %}">Retourner à la liste de vos activités</a>
+<a href="{% url 'modifier-activité' activité.id %}">Modifier l'activité</a>
+<a href="{% url 'supprimer-activité' activité.id %}">Supprimer l'activité</a>
+
+{% endblock %}

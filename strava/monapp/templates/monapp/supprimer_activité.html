@@ -1,0 +1,15 @@
+{% extends 'monapp/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'monapp/supprimer_activité.html' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Supprimer l'activité</h1>
+<p>Êtes-vous sûr de vouloir supprimer l'activité du {{activité.date}} ?</p>
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Supprimer">
+</form>
+{% endblock %}

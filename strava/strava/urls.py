@@ -24,5 +24,12 @@ urlpatterns = [
     path('',views.accueil),
     
     path('programmes/', views.liste_programmes, name="liste-programmes"),
-    path('programmes/<int:id>/', views.programme_détails, name="programme-détails")
+    path('programmes/<int:id>/', views.programme_détails, name="programme-détails"),
+
+    path('<int:id>/activités/', views.liste_activités, name="liste-activités"),
+    path('activités/<int:id>/', views.activité_détails, name="activité-détails"),
+    path('activités/ajouter/<int:id>',views.ajouter_activité,name="ajouter-activité"),
+    path('activités/modifier/<int:id>/', views.modifier_activité, name="modifier-activité"),
+    path('activités/supprimer/<int:id>/', views.supprimer_activité, name="supprimer-activité"),
+
 ]
