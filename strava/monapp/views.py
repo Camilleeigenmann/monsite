@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, redirect
-from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité
-from monapp.forms import Ajouter_activité_form
+from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité,ProgrammeCréé
+from monapp.forms import Ajouter_activité_form, Créer_programme_form
 
 def accueil(request) :
     utilisateurs=Utilisateur.objects.all()
@@ -11,15 +11,63 @@ def accueil(request) :
 
 
 
-def liste_programmes(request):
+def liste_programmes(request,id):
     programmes=Programme.objects.all()
+    utilisateur=Utilisateur.objects.get(id=id)
+    programmescréés=ProgrammeCréé.objects.filter(utilisateur=id)
     
-    return render(request, 'monapp/liste_programmes.html', {'programmes':programmes})
+    return render(request, 'monapp/liste_programmes.html', {'programmes':programmes, 'programmescréés':programmescréés,'utilisateur':utilisateur})
 
 def programme_détails(request,id) :
     programme=Programme.objects.get(id=id) #pour donner les détails d'un programme en particulier
 
     return render(request, 'monapp/programme_détails.html', {'programme': programme})
+
+
+
+
+def programmecréé_détails(request,id):
+    programmecréé=ProgrammeCréé.objects.get(id=id)
+    utilisateur=programmecréé.utilisateur
+
+    return render(request, 'monapp/programmecréé_détails.html',{'programmecréé': programmecréé, 'utilisateur':utilisateur})
+
+def créer_programme(request,id) :
+    utilisateur_utilisé=Utilisateur.objects.get(id=id)
+    if request.method =='POST' :
+        form =Créer_programme_form(request.POST)
+        if form.is_valid() :
+            programmecréé= form.save(commit=False)   # arrêter la création de l'objet pour remplir le champ utilisateur avec l'id donnée
+            programmecréé.utilisateur= utilisateur_utilisé    #lier mannuellement le programme à un utilisateur(pas son id)
+            programmecréé.save()    # créer un nouveau programme et le stocker dans la db
+            return redirect('programmecréé-détails',programmecréé.id)    # redirige vers les détails du programme créé
+    else :
+        form= Créer_programme_form() # méthode GET
+
+    return render(request, 'monapp/créer_programme.html', {'form': form})
+
+def modifier_programme(request,id) :
+    programmecréé = ProgrammeCréé.objects.get(id=id)
+    if request.method =='POST' :
+        form =Créer_programme_form(request.POST,instance=programmecréé) # on pré-rempli un formulaire avec un programme perso déjà existant
+        if form.is_valid :
+            # mettre à jour le programme créé déjà existante
+            form.save() 
+            # rediriger vers les détails du programme créé
+            return redirect('programmecréé-details', programmecréé.id)
+    else :
+        form = Créer_programme_form(instance=programmecréé)
+
+    return render(request, 'monapp/modifier_programme.html', {'form': form, 'programmecréé':programmecréé})
+
+def supprimer_programme(request,id) :
+    programmecréé= ProgrammeCréé.objects.get(id=id)
+    utilisateur=programmecréé.utilisateur
+    if request.method == 'POST' :
+        # supprimer le groupe de la base de donnée
+        programmecréé.delete()
+        return redirect( 'liste-programmes', utilisateur.id)
+    return render(request, 'monapp/supprimer_programme.html', {'programmecréé': programmecréé})
 
 
 

@@ -7,7 +7,17 @@
 
 {% block content %}
     <h1>Voici la liste des programmes d'entraînement</h1>
+    <h2>Nos programmes :</h2>
     {% for programme in programmes %}
     <div class="programme"><a href="{% url 'programme-détails' programme.id %}" >{{programme.titre}}</a></div>
     {% endfor %}
+    <br><br>
+    <h2>Mes programmes :</h2>
+    {% for programmecréé in programmescréés %}
+    <div><a href="{% url 'programmecréé-détails' programmecréé.id %}">{{programmecréé.titre}}</a></div>
+    {% endfor %}
+    <footer>
+        <a href="{% url 'liste-activités' utilisateur.id %}">Mes activités</a>
+        <a href="{% url 'créer-programme' utilisateur.id %}">Créer un programme</a>
+    </footer>
 {% endblock %}

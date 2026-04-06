@@ -1,2 +1,5 @@
 *{ background-color: lightblue;
 }
+footer{text-align: center;
+bottom: 0%;
+position: fixed;}

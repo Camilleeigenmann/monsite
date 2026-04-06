@@ -9,5 +9,9 @@
 {% for activité in activités %}
 <div><a href="{% url 'activité-détails'  activité.id %}">Activité du {{activité.date}}</a></div>
 {% endfor %}
-<footer><a href="{% url 'ajouter-activité' utilisateur.id %}">Ajouter une activité </a></footer>
+<footer>
+   <a href="{% url 'ajouter-activité' utilisateur.id %}">Ajouter une activité </a>
+   <a href="{% url 'liste-programmes' utilisateur.id %}">Voir les programmes</a>
+</footer>
+
 {% endblock %}

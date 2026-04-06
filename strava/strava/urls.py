@@ -23,12 +23,17 @@ urlpatterns = [
     path('accueil/',views.accueil),
     path('',views.accueil),
     
-    path('programmes/', views.liste_programmes, name="liste-programmes"),
+    path('<int:id>/programmes/', views.liste_programmes, name="liste-programmes"),
     path('programmes/<int:id>/', views.programme_détails, name="programme-détails"),
+
+    path('programmescréés/<int:id>/', views.programmecréé_détails,name="programmecréé-détails"),
+    path('programmescréés/créer/<int:id>/', views.créer_programme, name="créer-programme"),
+    path('programmescréés/modifier/<int:id>/', views.modifier_programme,name="modifier-programme"),
+    path('programmescréés/supprimer/<int:id>/', views.supprimer_programme,name="supprimer-programme"),
 
     path('<int:id>/activités/', views.liste_activités, name="liste-activités"),
     path('activités/<int:id>/', views.activité_détails, name="activité-détails"),
-    path('activités/ajouter/<int:id>',views.ajouter_activité,name="ajouter-activité"),
+    path('activités/ajouter/<int:id>/',views.ajouter_activité,name="ajouter-activité"),
     path('activités/modifier/<int:id>/', views.modifier_activité, name="modifier-activité"),
     path('activités/supprimer/<int:id>/', views.supprimer_activité, name="supprimer-activité"),
 

@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block extra_css %}
-<link  rel="stylesheet" href="{% static 'monapp/modifier_activité.css' %}">
+<link rel="stylesheet" href="{% static 'monapp/créer_programme.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>Modifiez le programme "{{programmecréé.titre}}"</h1>
+<h1>Créez un programme</h1>
 <form action="" method="post" >
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Envoyer" >
+    <input type="submit" value="Enregistrer" >
 </form>
 {% endblock %}
