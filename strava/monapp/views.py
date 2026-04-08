@@ -12,11 +12,24 @@ def accueil(request) :
 
 
 def liste_programmes(request,id):
-    programmes=Programme.objects.all()
     utilisateur=Utilisateur.objects.get(id=id)
-    programmescréés=ProgrammeCréé.objects.filter(utilisateur=id)
+
+    programmes=Programme.objects.all()
+    programmes_technique=Programme.objects.filter(but='Technique')
+    programmes_puissance=Programme.objects.filter(but='Puissance')
+    programmes_endurance=Programme.objects.filter(but='Endurance')
+    programmes_autre=Programme.objects.filter(but='Autre')
     
-    return render(request, 'monapp/liste_programmes.html', {'programmes':programmes, 'programmescréés':programmescréés,'utilisateur':utilisateur})
+    programmescréés=ProgrammeCréé.objects.filter(utilisateur=id)
+    programmescréés_technique=ProgrammeCréé.objects.filter(but='Technique')
+    programmescréés_puissance=ProgrammeCréé.objects.filter(but='Puissance')
+    programmescréés_endurance=ProgrammeCréé.objects.filter(but='Endurance')
+    programmescréés_autre=ProgrammeCréé.objects.filter(but='Autre')
+    # pour classer les programmes en fonction de leurs but dans la page "liste_programmes"
+    
+    return render(request, 'monapp/liste_programmes.html', {'programmes':programmes, 'programmescréés':programmescréés,'utilisateur':utilisateur,
+    'programmes_technique':programmes_technique,'programmes_puissance':programmes_puissance,'programmes_endurance':programmes_endurance,'programmes_autre':programmes_autre,
+    'programmescréés_technique':programmescréés_technique,'programmescréés_puissance':programmescréés_puissance,'programmescréés_endurance':programmescréés_endurance,'programmescréés_autre':programmescréés_autre})
 
 def programme_détails(request,id) :
     programme=Programme.objects.get(id=id) #pour donner les détails d'un programme en particulier
@@ -45,6 +58,8 @@ def créer_programme(request,id) :
         form= Créer_programme_form() # méthode GET
 
     return render(request, 'monapp/créer_programme.html', {'form': form})
+
+    
 
 def modifier_programme(request,id) :
     programmecréé = ProgrammeCréé.objects.get(id=id)

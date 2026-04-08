@@ -29,7 +29,7 @@ class Programme(models.Model) :
         Puissance='Puissance'        
         Autre='Autre'
     but = models.fields.CharField(choices=But.choices)
-    description= models.fields.CharField(max_length=400)
+    description= models.fields.CharField(max_length=500)
     nombre_exercices=models.fields.IntegerField(null=True, blank=True)
     durée=models.DurationField(validators=[validate_max_duration],default=timedelta(hours=2))
     def __str__(self) :
@@ -74,7 +74,11 @@ class Activité(models.Model) :
     durée=models.DurationField(validators=[validate_max_duration],default=timedelta(hours=3)) 
     def __str__(self) :
         return f'Activité du {self.date}'
-
+    def clean(self) :
+        super().clean() 
+        if self.programme and self.programmecréé :
+            raise ValidationError("Vous ne pouvez pas entrer deux programmes dans une activité")
+        
     
 
 

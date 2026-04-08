@@ -12,8 +12,10 @@
 <br>
 <div>Description :{{programme.description}}</div>
 <br>
+{% if programme.nombre_exercices %}
 <div> Nombre d'exercices :{{programme.nombre_exercices}}</div>
 <br>
+{% endif %}
 <div> Ce programme a une durée d'environ {{programme.durée}} heures</div>
 {% endblock %}
 
