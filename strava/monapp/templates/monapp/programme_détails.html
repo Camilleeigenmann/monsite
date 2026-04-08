@@ -17,6 +17,8 @@
 <br>
 {% endif %}
 <div> Ce programme a une durée d'environ {{programme.durée}} heures</div>
+<br>
+<a href="{% url 'ajouter-activité-programme' programme.id  %}">Utiliser ce programme</a>
 {% endblock %}
 
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, redirect
 from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité,ProgrammeCréé
-from monapp.forms import Ajouter_activité_form, Créer_programme_form
+from monapp.forms import Ajouter_activité_form, Créer_programme_form,Ajouter_activitéprogrammecréé_form,Ajouter_activitéprogramme_form
 
 def accueil(request) :
     utilisateurs=Utilisateur.objects.all()
@@ -33,10 +33,7 @@ def liste_programmes(request,id):
 
 def programme_détails(request,id) :
     programme=Programme.objects.get(id=id) #pour donner les détails d'un programme en particulier
-
-    return render(request, 'monapp/programme_détails.html', {'programme': programme})
-
-
+    return render(request, 'monapp/programme_détails.html', {'programme': programme,})
 
 
 def programmecréé_détails(request,id):
@@ -44,6 +41,24 @@ def programmecréé_détails(request,id):
     utilisateur=programmecréé.utilisateur
 
     return render(request, 'monapp/programmecréé_détails.html',{'programmecréé': programmecréé, 'utilisateur':utilisateur})
+
+def ajouter_activité_programmecréé(request,id) :
+    programmecréé_utilisé= ProgrammeCréé.objects.get(id=id)
+    utilisateur=programmecréé_utilisé.utilisateur
+    if request.method =='POST' :
+        form =Ajouter_activitéprogrammecréé_form(request.POST)
+        if form.is_valid() :
+            activité= form.save(commit=False)   # arrêter la création de l'objet pour remplir le champ utilisateur avec l'id donnée
+            activité.utilisateur= utilisateur   #lier mannuellement l'activité à un utilisateur(pas son id)
+            activité.save()    # créer une nouvelle activité et la stocker dans la db
+            return redirect('activité-détails',activité.id)    # redirige vers la liste d'activités de l'utilisateur
+    else :
+        form= Ajouter_activitéprogrammecréé_form(initial={'programmecréé':programmecréé_utilisé}) 
+        # méthode GET, on remplit automatiquement le champ programmecréé avec celui utilisé
+
+    return render(request, 'monapp/ajouter_activité.html', {'form': form})
+
+
 
 def créer_programme(request,id) :
     utilisateur_utilisé=Utilisateur.objects.get(id=id)

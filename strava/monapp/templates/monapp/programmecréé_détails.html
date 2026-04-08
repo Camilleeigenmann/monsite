@@ -20,4 +20,5 @@
 <a href="{% url 'liste-programmes' utilisateur.id %}">Retourner à la bibliothèque de programmes</a>
 <a href="{% url 'modifier-programme' programmecréé.id %}">Modifier ce programme</a>
 <a href="{% url 'supprimer-programme' programmecréé.id %}">Supprimer ce programme</a>
+<a href="{% url 'ajouter-activité-programmecréé' programmecréé.id %}">Utiliser ce programme</a>
 {% endblock %}
