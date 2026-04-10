@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="{% static 'monapp/activité_détails.css' %}">
 {% endblock %}
 
+{% load monapp.durée_format %}
+
 {% block content %}
 <h1>Activité du {{activité.date}}</h1>
 <div>{{activité.description}}</div>
@@ -16,7 +18,7 @@
 {% if activité.programmecréé %}
 <div> Vous avez fait ce programme : {{activité.programmecréé }}</div>
 {% endif %}
-<div>Cette activité a duré {{activité.durée}} heures</div>
+<div>Cette activité a duré {{activité.durée|durée_format}}</div>
 <br><br>
 <a href="{% url 'liste-activités' utilisateur.id %}">Retourner à la liste de vos activités</a>
 <a href="{% url 'modifier-activité' activité.id %}">Modifier l'activité</a>

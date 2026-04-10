@@ -4,6 +4,8 @@
    <link rel="stylesheet" href="{% static 'monapp/programme_détails.css' %}">
 {% endblock %}
 
+{% load monapp.durée_format %}
+
 {% block content %}
 <h1>{{programmecréé.titre}}</h1>
 
@@ -15,7 +17,7 @@
 <div> Nombre d'exercices :{{programmecréé.nombre_exercices}}</div>
 <br>
 {% endif %}
-<div> Ce programme a une durée d'environ {{programmecréé.durée}} heures</div>
+<div> Ce programme a une durée d'environ {{programmecréé.durée|durée_format}}</div>
 <br><br>
 <a href="{% url 'liste-programmes' utilisateur.id %}">Retourner à la bibliothèque de programmes</a>
 <a href="{% url 'modifier-programme' programmecréé.id %}">Modifier ce programme</a>

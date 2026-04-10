@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, redirect
 from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité,ProgrammeCréé
-from monapp.forms import Ajouter_activité_form, Créer_programme_form,Ajouter_activitéprogrammecréé_form,Ajouter_activitéprogramme_form
+from monapp.forms import Ajouter_activité_form, Créer_programme_form,Ajouter_activitéprogrammecréé_form
 
 def accueil(request) :
     utilisateurs=Utilisateur.objects.all()
@@ -107,7 +107,7 @@ def supprimer_programme(request,id) :
 
 def liste_activités(request,id) :
     utilisateur=Utilisateur.objects.get(id=id)
-    activités=Activité.objects.filter(utilisateur=id)
+    activités=Activité.objects.filter(utilisateur=id).order_by('-date') #ordonner du plus récent au moins récent
     
 # les activités liés à cet utilisateur seront donc séléctionnées puis affichées (un seul dictionnaire sinon ça bug)
     return render(request, 'monapp/liste_activités.html', {'activités':activités , 'utilisateur': utilisateur})
