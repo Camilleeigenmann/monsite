@@ -4,8 +4,12 @@ flex-wrap: nowrap;}
 
 .programme{margin-left: 5px;
 margin-right: 5px;
-padding: 5px;
-border-color: black;
-border-radius: 3px;
-border-width: 2px;
+padding: 3px;
+border: black solid 3px;
+border-radius: 5px;
 text-align: center;}
+
+
+.programme div{color: white;}
+
+a{text-decoration: none;}

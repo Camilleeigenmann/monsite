@@ -1,5 +1,8 @@
 {% extends 'monapp/base.html' %}
 {% load static %}
+
+{% load monapp.durée_format %}
+
 {% block extra_css %}
    <link rel="stylesheet" href="{% static 'monapp/liste_activités.css' %}">
 {% endblock %}
@@ -7,7 +10,24 @@
 {% block content %}
 <h1>Voici les activités de {{utilisateur.prénom}} {{utilisateur.nom}}</h1>
 {% for activité in activités %}
-<div><a href="{% url 'activité-détails'  activité.id %}">Activité du {{activité.date}}</a></div>
+<div class="activité"><a href="{% url 'activité-détails'  activité.id %}">
+
+   <div class=" boîte utilisateur">{{utilisateur.prénom}} {{utilisateur.nom}}</div>
+   <div class=" boîte date">{{activité.date}}</div>
+   <div class="boîte but">{{activité.but}}</div>
+
+      {% if activité.programme  %}
+         <div class="boîte programme_description">{{activité.programme.titre}}</div>
+      {% elif activité.programmecréé %}
+         <div class="boîte programme_description">{{activité.programmecréé.titre}}</div>
+      {% else %}
+         <div class="boîte programme_description">Appuyez pour voir la description</div>
+      {% endif %}
+
+   <div class="boîte durée">{{activité.durée|durée_format}}</div>
+
+</a></div>
+
 {% endfor %}
 <footer>
    <a href="{% url 'ajouter-activité' utilisateur.id %}">Ajouter une activité </a>

@@ -15,9 +15,11 @@
 <div><a href="{% url 'programme-détails' programme.id %}">Vous avez fait ce programme : {{programme.titre}}</a></div>
 <br>
 {% endif %}
+
 {% if activité.programmecréé %}
 <div> Vous avez fait ce programme : {{activité.programmecréé }}</div>
 {% endif %}
+
 <div>Cette activité a duré {{activité.durée|durée_format}}</div>
 <br><br>
 <a href="{% url 'liste-activités' utilisateur.id %}">Retourner à la liste de vos activités</a>
