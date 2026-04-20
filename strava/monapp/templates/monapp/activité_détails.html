@@ -12,13 +12,10 @@
 <div>{{activité.description}}</div>
 <br>
 {% if activité.programme %}
-<div><a href="{% url 'programme-détails' programme.id %}">Vous avez fait ce programme : {{programme.titre}}</a></div>
+<div><a href="{% url 'programme-détails' programme.id utilisateur.id %}">Vous avez fait ce programme : {{programme.titre}}</a></div>
 <br>
 {% endif %}
 
-{% if activité.programmecréé %}
-<div> Vous avez fait ce programme : {{activité.programmecréé }}</div>
-{% endif %}
 
 <div>Cette activité a duré {{activité.durée|durée_format}}</div>
 <br><br>

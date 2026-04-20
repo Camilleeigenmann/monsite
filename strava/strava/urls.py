@@ -24,13 +24,12 @@ urlpatterns = [
     path('',views.accueil),
     
     path('<int:id>/programmes/', views.liste_programmes, name="liste-programmes"),
-    path('programmes/<int:id>/', views.programme_détails, name="programme-détails"),
+    path('programmes/<int:id>/<int:utilisateur_id>/', views.programme_détails, name="programme-détails"),
 
-    path('programmescréés/<int:id>/', views.programmecréé_détails,name="programmecréé-détails"),
-    path('programmescréés/créer/<int:id>/', views.créer_programme, name="créer-programme"),
-    path('programmescréés/modifier/<int:id>/', views.modifier_programme,name="modifier-programme"),
-    path('programmescréés/supprimer/<int:id>/', views.supprimer_programme,name="supprimer-programme"),
-    path('programmescréés/<int:id>/activités/ajouter/', views.ajouter_activité_programmecréé, name="ajouter-activité-programmecréé"),
+    path('programmes/créer/<int:id>/', views.créer_programme, name="créer-programme"),
+    path('programmes/modifier/<int:id>/', views.modifier_programme,name="modifier-programme"),
+    path('programmes/supprimer/<int:id>/', views.supprimer_programme,name="supprimer-programme"),
+    path('programmes/<int:id>/<int:utilisateur_id>/activités/ajouter/', views.ajouter_activité_programme, name="ajouter-activité-programme"),
 
     path('<int:id>/activités/', views.liste_activités, name="liste-activités"),
     path('activités/<int:id>/', views.activité_détails, name="activité-détails"),

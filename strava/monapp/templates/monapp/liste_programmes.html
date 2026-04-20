@@ -16,7 +16,7 @@
     <h4>Technique :</h4>
     <div class="listeprogrammebut">
     {% for programme_technique in programmes_technique %}   
-        <div class="programme"><a href="{% url 'programme-détails' programme_technique.id  %}">
+        <div class="programme"><a href="{% url 'programme-détails' programme_technique.id utilisateur.id  %}">
             <div>{{programme_technique.titre}}</div>
             <div>{{programme_technique.durée|durée_format}}</div>
         </a></div>   
@@ -26,7 +26,7 @@
     <h4>Puissance :</h4>
     <div class="listeprogrammebut">
     {% for programme_puissance in programmes_puissance %}     
-        <div class="programme"><a href="{% url 'programme-détails' programme_puissance.id  %}">
+        <div class="programme"><a href="{% url 'programme-détails' programme_puissance.id utilisateur.id %}">
             <div>{{programme_puissance.titre}}</div>
             <div>{{programme_puissance.durée|durée_format}}</div>
         </a></div>    
@@ -36,7 +36,7 @@
     <h4>Endurance:</h4>
     <div class="listeprogrammebut">
     {% for programme_endurance in programmes_endurance %}     
-        <div class="programme"><a href="{% url 'programme-détails' programme_endurance.id  %}">
+        <div class="programme"><a href="{% url 'programme-détails' programme_endurance.id utilisateur.id %}">
             <div>{{programme_endurance.titre}}</div>
             <div>{{programme_endurance.durée|durée_format}}</div>
         </a></div>    
@@ -46,7 +46,7 @@
     <h4>Autre :</h4>
     <div class="listeprogrammebut">
     {% for programme_autre in programmes_autre %}        
-        <div class="programme"><a href="{% url 'programmecréé-détails' programme_autre.id  %}">
+        <div class="programme"><a href="{% url 'programme-détails' programme_autre.id utilisateur.id %}">
             <div>{{programme_autre.titre}}</div>
             <div>{{programme_autre.durée|durée_format}}</div>
         </a></div>   
@@ -60,9 +60,9 @@
 
         {% if programmescréés_technique %}
             <h4>Technique :</h4>
-            <div class="listeprogrammebut">>
+            <div class="listeprogrammebut">
             {% for programmecréé_technique in programmescréés_technique %}       
-                <div class="programme"><a href="{% url 'programmecréé-détails' programmecréé_technique.id %}">
+                <div class="programme"><a href="{% url 'programme-détails' programmecréé_technique.id utilisateur.id %}">
                     <div>{{programmecréé_technique.titre}}</div>
                     <div>{{programmecréé_technique.durée|durée_format}}</div>
                 </a></div>    
@@ -75,7 +75,7 @@
             <h4>Puissance :</h4>
             <div class="listeprogrammebut">
             {% for programmecréé_puissance in programmescréés_puissance %}   
-                <div class="programme"><a href="{% url 'programmecréé-détails' programmecréé_puissance.id %}">
+                <div class="programme"><a href="{% url 'programme-détails' programmecréé_puissance.id utilisateur.id %}">
                     <div>{{programmecréé_puissance.titre}}</div>
                     <div>{{programmecréé_puissance.durée|durée_format}}</div>
                 </a></div>               
@@ -88,7 +88,7 @@
             <h4>Endurance:</h4> 
             <div class="listeprogrammebut">
             {% for programmecréé_endurance in programmescréés_endurance %}                                           
-                <div class="programme"><a href="{% url 'programmecréé-détails' programmecréé_endurance.id %}">
+                <div class="programme"><a href="{% url 'programme-détails' programmecréé_endurance.id utilisateur.id %}">
                     <div>{{programmecréé_endurance.titre}}</div>
                     <div>{{programmecréé_endurance.durée|durée_format}}</div>
                 </a></div>                
@@ -101,7 +101,7 @@
             <h4>Autre :</h4>
             <div class="listeprogrammebut">
             {% for programmecréé_autre in programmescréés_autre %}                                                
-                <div class="programme"><a href="{% url 'programmecréé-détails' programmecréé_autre.id %}">
+                <div class="programme"><a href="{% url 'programme-détails' programmecréé_autre.id utilisateur.id %}">
                     <div>{{programmecréé_autre.titre}}</div>
                     <div>{{programmecréé_autre.durée|durée_format}}</div>
                 </a></div>

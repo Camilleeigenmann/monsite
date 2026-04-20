@@ -21,6 +21,13 @@
 <div> Ce programme a une durée d'environ {{programme.durée|durée_format}}</div>
 <br>
 
+<a href="{% url 'liste-programmes' utilisateur.id %}">Retourner à la bibliothèque de programmes</a>
+<a href="{% url 'ajouter-activité-programme' programme.id utilisateur.id %}">Utiliser ce programme</a>
+{% if programme.utilisateur %}
+<a href="{% url 'modifier-programme' programme.id %}">Modifier le programme</a>
+<a href="{% url 'supprimer-programme' programme.id %}">Supprimer le programme</a>
+{% endif %}
+
 {% endblock %}
 
 

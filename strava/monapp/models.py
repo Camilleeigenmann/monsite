@@ -32,6 +32,7 @@ class Programme(models.Model) :
     description= models.fields.CharField(max_length=500)
     nombre_exercices=models.fields.IntegerField(null=True, blank=True)
     durée=models.DurationField(validators=[validate_max_duration],default=timedelta(hours=2))
+    utilisateur=models.ForeignKey(Utilisateur,null=True, on_delete=models.CASCADE)
     def __str__(self) :
         return f'{self.titre}'
     
@@ -39,20 +40,7 @@ class Programme(models.Model) :
 
 
 
-class ProgrammeCréé(models.Model) :
-    titre= models.CharField(max_length=30)
-    class But(models.TextChoices) :
-        Technique='Technique'
-        Endurance='Endurance'
-        Puissance='Puissance'        
-        Autre='Autre'
-    but = models.fields.CharField(choices=But.choices)
-    utilisateur=models.ForeignKey(Utilisateur,default=0, on_delete=models.CASCADE)
-    description= models.fields.CharField(max_length=400)
-    nombre_exercices=models.fields.IntegerField(null=True,blank=True)
-    durée=models.DurationField(validators=[validate_max_duration],default=timedelta(hours=2))
-    def __str__(self) :
-        return f'{self.titre}'
+
     
 
 
@@ -69,15 +57,11 @@ class Activité(models.Model) :
     but = models.fields.CharField(choices=But.choices, default='Grimpe libre')
     programme=models.ForeignKey(Programme, null=True, blank=True, on_delete=models.SET_NULL) 
     # null pour la base de donnée et blank pour le formulaire(champ pas nécessaire)
-    programmecréé=models.ForeignKey(ProgrammeCréé, null=True, blank=True, on_delete=models.SET_NULL)
     utilisateur=models.ForeignKey(Utilisateur,default=0, on_delete=models.CASCADE)
     durée=models.DurationField(validators=[validate_max_duration],default=timedelta(hours=3)) 
     def __str__(self) :
         return f'Activité du {self.date}'
-    def clean(self) :
-        super().clean() 
-        if self.programme and self.programmecréé :
-            raise ValidationError("Vous ne pouvez pas entrer deux programmes dans une activité")
+    
         
     
 
