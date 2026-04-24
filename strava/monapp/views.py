@@ -2,14 +2,64 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse, redirect
 from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité
 from monapp.forms import Ajouter_activité_form, Créer_programme_form,Ajouter_activitéprogramme_form
-
+from django.utils import timezone
 def accueil(request) :
     utilisateurs=Utilisateur.objects.all()
     return render(request,'monapp/accueil.html',{'utilisateurs': utilisateurs})
 
 
 
+def accueil_utilisateur(request, id ):
+    utilisateur=Utilisateur.objects.get(id=id)
+    now=timezone.now()
+    mois_actuel=now.month
+    annee_actuelle=now.year
 
+    activites_du_mois=Activité.objects.filter(utilisateur_id=utilisateur.id,date__year=now.year,date__month=now.month)
+    nb_activites_technique_mois=0
+    nb_activites_puissance_mois=0
+    nb_activites_endurance_mois=0
+    nb_activites_autre_mois=0
+    nb_activites_grimpe_libre_mois=0
+    for activite in activites_du_mois :
+        if activite.but=='Technique' :
+            nb_activites_technique_mois +=1
+        if activite.but=='Puissance':
+            nb_activites_puissance_mois +=1
+        if activite.but=='Endurance' :
+            nb_activites_endurance_mois +=1
+        if activite.but=='Autre' :
+            nb_activites_autre_mois +=1
+        if activite.but=='Grimpe libre' :
+            nb_activites_grimpe_libre_mois +=1
+    
+
+    activites_annee=Activité.objects.filter(utilisateur_id=utilisateur.id,date__year=now.year)
+    nb_activites_technique_annee=0
+    nb_activites_puissance_annee=0
+    nb_activites_endurance_annee=0
+    nb_activites_autre_annee=0
+    nb_activites_grimpe_libre_annee=0
+    for activite in activites_annee :
+        if activite.but=='Technique' :
+            nb_activites_technique_annee +=1
+        if activite.but=='Puissance':
+            nb_activites_puissance_annee +=1
+        if activite.but=='Endurance' :
+            nb_activites_endurance_annee +=1
+        if activite.but=='Autre' :
+            nb_activites_autre_annee +=1
+        if activite.but=='Grimpe libre' :
+            nb_activites_grimpe_libre_annee +=1
+
+    return render(request,'monapp/accueil_utilisateur.html', {'utilisateur':utilisateur,'mois_actuel':mois_actuel,
+    'annee_actuelle':annee_actuelle,'activites_du_mois':activites_du_mois,'activites_annee':activites_annee
+    ,'nb_activites_technique_mois':nb_activites_technique_mois, 'nb_activites_puissance_mois':nb_activites_puissance_mois
+    ,'nb_activites_endurance_mois':nb_activites_endurance_mois,'nb_activites_autre_mois':nb_activites_autre_mois
+    ,'nb_activites_grimpe_libre_mois':nb_activites_grimpe_libre_mois
+    ,'nb_activites_technique_annee':nb_activites_technique_annee,'nb_activites_puissance_annee':nb_activites_puissance_annee
+    ,'nb_activites_endurance_annee':nb_activites_autre_mois,'nb_activites_autre_annee':nb_activites_autre_annee
+    ,'nb_activites_grimpe_libre_annee':nb_activites_grimpe_libre_annee})
 
 def liste_programmes(request,id):
     utilisateur=Utilisateur.objects.get(id=id)

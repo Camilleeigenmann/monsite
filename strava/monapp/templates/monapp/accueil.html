@@ -8,7 +8,7 @@
         <h1>Utilisateurs :</h1>
         <ul>
             {% for utilisateur in utilisateurs %}
-            <li><a href="{% url 'liste-activités' utilisateur.id %}">{{utilisateur.prénom}} {{utilisateur.nom}}</a></li>
+            <li><a href="{% url 'accueil-utilisateur' utilisateur.id %}">{{utilisateur.prénom}} {{utilisateur.nom}}</a></li>
             {% endfor %}
         </ul>
  {% endblock %}

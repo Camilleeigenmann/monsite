@@ -1,0 +1,36 @@
+{% extends 'monapp/base.html' %}
+{% load static %}
+{% load monapp.durée_format %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="monapp/accueil_utilisateur.css">
+{% endblock %}
+
+{% block content %}
+
+<h4> Bienvenue {{utilisateur.prénom}} {{utilisateur.nom}}</h4>
+<br><br><br>
+<div class="resume_mois_et_annee">
+    <div class="resume_du_mois">
+        <h2>Vos activités du mois ({{mois_actuel}}) :</h2>
+        <div> Vous avez fait {{activites_du_mois|length}} activités ce mois-ci, dont :</div>
+        <div>{{nb_activites_technique_mois}} pour la technique</div>
+        <div>{{nb_activites_puissance_mois}} pour la puissance</div>
+        <div>{{nb_activites_endurance_mois}} pour l'endurance</div>
+        <div>{{nb_activites_autre_mois}} avec un autre but</div>
+        <div>{{nb_activites_grimpe_libre_mois}} en grimpe libre</div>
+
+        
+    </div>
+    <div class="resume_annee">
+        <h2>Vos activités de l'année ({{annee_actuelle}}):</h2>
+        <div> Vous avez fait {{activites_annee|length}} activités ce mois-ci, dont:</div>
+        <div>{{nb_activites_technique_annee}} pour la technique</div>
+        <div>{{nb_activites_puissance_annee}} pour la puissance</div>
+        <div>{{nb_activites_endurance_annee}} pour l'endurance</div>
+        <div>{{nb_activites_autre_annee}} avec un autre but</div>
+        <div>{{nb_activites_grimpe_libre_annee}} en grimpe libre</div>
+        
+    </div>
+</div>
+{% endblock %}

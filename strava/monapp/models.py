@@ -52,7 +52,8 @@ class Activité(models.Model) :
     class But(models.TextChoices) :
         Technique='Technique'
         Endurance='Endurance'
-        Puissance='Puissance'        
+        Puissance='Puissance' 
+        Autre='Autre'       
         Grimpe_libre='Grimpe libre'
     but = models.fields.CharField(choices=But.choices, default='Grimpe libre')
     programme=models.ForeignKey(Programme, null=True, blank=True, on_delete=models.SET_NULL) 

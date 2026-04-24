@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accueil/',views.accueil),
     path('',views.accueil),
+    path('accueil/<int:id>/', views.accueil_utilisateur, name='accueil-utilisateur'),
     
     path('<int:id>/programmes/', views.liste_programmes, name="liste-programmes"),
     path('programmes/<int:id>/<int:utilisateur_id>/', views.programme_détails, name="programme-détails"),
