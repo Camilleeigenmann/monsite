@@ -1,15 +1,18 @@
-{% extends 'monapp/base.html' %}
 {% load static %}
-{% block extra_css %}
-  <link rel="stylesheet" href="{% static 'monapp/accueil.css' %}">
-{% endblock %}
+<html>
+  <head>
+    <link rel="stylesheet" href="{% static 'monapp/accueil.css' %}">
+  </head>
 
-{% block content %}
-        <h1>Utilisateurs :</h1>
-        <ul>
-            {% for utilisateur in utilisateurs %}
-            <li><a href="{% url 'accueil-utilisateur' utilisateur.id %}">{{utilisateur.prénom}} {{utilisateur.nom}}</a></li>
-            {% endfor %}
-        </ul>
- {% endblock %}
+  <body>
+    <h1>Utilisateurs :</h1>
+    <ul>
+      {% for utilisateur in utilisateurs %}
+      <li><a href="{% url 'accueil-utilisateur' utilisateur.id %}">{{utilisateur.prénom}} {{utilisateur.nom}}</a></li>
+      {% endfor %}
+    </ul>
+  </body>
+ 
+
+ </html>
     

@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse, redirect
 from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité
 from monapp.forms import Ajouter_activité_form, Créer_programme_form,Ajouter_activitéprogramme_form
 from django.utils import timezone
+from django.db.models import Sum
 def accueil(request) :
     utilisateurs=Utilisateur.objects.all()
     return render(request,'monapp/accueil.html',{'utilisateurs': utilisateurs})
@@ -16,6 +17,11 @@ def accueil_utilisateur(request, id ):
     annee_actuelle=now.year
 
     activites_du_mois=Activité.objects.filter(utilisateur_id=utilisateur.id,date__year=now.year,date__month=now.month)
+    #prends uniquement les activités créées le mois se déroulant actuellement grâce à timezone.now().month/year
+    # et date__year/date__month
+    duree_totale_mois=activites_du_mois.aggregate(total=Sum('durée'))['total']
+    #fais la somme de la durée des activités du mois 
+
     nb_activites_technique_mois=0
     nb_activites_puissance_mois=0
     nb_activites_endurance_mois=0
@@ -32,9 +38,13 @@ def accueil_utilisateur(request, id ):
             nb_activites_autre_mois +=1
         if activite.but=='Grimpe libre' :
             nb_activites_grimpe_libre_mois +=1
+    #filtrer les activités du mois en fonction de leurs buts pour donner un résumé plus qualitatif
     
 
     activites_annee=Activité.objects.filter(utilisateur_id=utilisateur.id,date__year=now.year)
+    #prends uniquement les activités de l'année actuelle grâce à date__year et timezone.now()
+    duree_totale_annee=activites_annee.aggregate(total=Sum('durée'))['total']
+
     nb_activites_technique_annee=0
     nb_activites_puissance_annee=0
     nb_activites_endurance_annee=0
@@ -52,14 +62,20 @@ def accueil_utilisateur(request, id ):
         if activite.but=='Grimpe libre' :
             nb_activites_grimpe_libre_annee +=1
 
-    return render(request,'monapp/accueil_utilisateur.html', {'utilisateur':utilisateur,'mois_actuel':mois_actuel,
-    'annee_actuelle':annee_actuelle,'activites_du_mois':activites_du_mois,'activites_annee':activites_annee
+
+
+    return render(request,'monapp/accueil_utilisateur.html', {'utilisateur':utilisateur
+    ,'mois_actuel':mois_actuel,'annee_actuelle':annee_actuelle
+    ,'activites_du_mois':activites_du_mois,'activites_annee':activites_annee
+    ,'duree_totale_mois' :duree_totale_mois,'duree_totale_annee':duree_totale_annee
     ,'nb_activites_technique_mois':nb_activites_technique_mois, 'nb_activites_puissance_mois':nb_activites_puissance_mois
     ,'nb_activites_endurance_mois':nb_activites_endurance_mois,'nb_activites_autre_mois':nb_activites_autre_mois
     ,'nb_activites_grimpe_libre_mois':nb_activites_grimpe_libre_mois
     ,'nb_activites_technique_annee':nb_activites_technique_annee,'nb_activites_puissance_annee':nb_activites_puissance_annee
     ,'nb_activites_endurance_annee':nb_activites_autre_mois,'nb_activites_autre_annee':nb_activites_autre_annee
     ,'nb_activites_grimpe_libre_annee':nb_activites_grimpe_libre_annee})
+
+
 
 def liste_programmes(request,id):
     utilisateur=Utilisateur.objects.get(id=id)
@@ -117,12 +133,13 @@ def créer_programme(request,id) :
     else :
         form= Créer_programme_form() # méthode GET
 
-    return render(request, 'monapp/créer_programme.html', {'form': form})
+    return render(request, 'monapp/créer_programme.html', {'form': form, 'utilisateur':utilisateur_utilisé})
 
     
 
 def modifier_programme(request,id) :
     programmecréé = Programme.objects.get(id=id)
+    utilisateur=programmecréé.utilisateur
     if request.method =='POST' :
         form =Créer_programme_form(request.POST,instance=programmecréé) # on pré-rempli un formulaire avec un programme perso déjà existant
         if form.is_valid :
@@ -133,7 +150,7 @@ def modifier_programme(request,id) :
     else :
         form = Créer_programme_form(instance=programmecréé)
 
-    return render(request, 'monapp/modifier_programme.html', {'form': form, 'programmecréé':programmecréé})
+    return render(request, 'monapp/modifier_programme.html', {'form': form, 'programmecréé':programmecréé, 'utilisateur':utilisateur})
 
 def supprimer_programme(request,id) :
     programmecréé= Programme.objects.get(id=id)
@@ -142,7 +159,7 @@ def supprimer_programme(request,id) :
         # supprimer le groupe de la base de donnée
         programmecréé.delete()
         return redirect( 'liste-programmes', utilisateur.id)
-    return render(request, 'monapp/supprimer_programme.html', {'programmecréé': programmecréé})
+    return render(request, 'monapp/supprimer_programme.html', {'programmecréé': programmecréé, 'utilisateur':utilisateur})
 
 
 
@@ -176,10 +193,11 @@ def ajouter_activité(request,id) :
     else :
         form= Ajouter_activité_form() # méthode GET
 
-    return render(request, 'monapp/ajouter_activité.html', {'form': form})
+    return render(request, 'monapp/ajouter_activité.html', {'form': form,'utilisateur':utilisateur_utilisé})
 
 def modifier_activité(request,id) :
     activité = Activité.objects.get(id=id)
+    utilisateur=activité.utilisateur
     if request.method =='POST' :
         form =Ajouter_activité_form(request.POST,instance=activité) # on pré-rempli un formulaire avec une activité déjà existant
         if form.is_valid :
@@ -190,7 +208,7 @@ def modifier_activité(request,id) :
     else :
         form = Ajouter_activité_form(instance=activité)
 
-    return render(request, 'monapp/modifier_activité.html', {'form': form, 'activité':activité})
+    return render(request, 'monapp/modifier_activité.html', {'form': form, 'activité':activité, 'utilisateur':utilisateur})
 
 def supprimer_activité(request,id) :
     activité= Activité.objects.get(id=id)
@@ -199,7 +217,7 @@ def supprimer_activité(request,id) :
         # supprimer le groupe de la base de donnée
         activité.delete()
         return redirect( 'liste-activités', utilisateur.id)
-    return render(request, 'monapp/supprimer_activité.html', {'activité': activité})
+    return render(request, 'monapp/supprimer_activité.html', {'activité': activité, 'utilisateur':utilisateur})
 
     
 
