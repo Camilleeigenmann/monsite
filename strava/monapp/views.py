@@ -1,12 +1,32 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, redirect
 from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité
-from monapp.forms import Ajouter_activité_form, Créer_programme_form,Ajouter_activitéprogramme_form
+from monapp.forms import Ajouter_activité_form, Créer_programme_form,Ajouter_activitéprogramme_form,LoginForm
 from django.utils import timezone
 from django.db.models import Sum
+from django.contrib.auth import login,authenticate
 def accueil(request) :
     utilisateurs=Utilisateur.objects.all()
     return render(request,'monapp/accueil.html',{'utilisateurs': utilisateurs})
+
+
+
+
+def login_page(request):
+    form=LoginForm()
+    
+    if request.method == 'POST':
+        form=LoginForm(request.POST)
+        if form.is_valid() :
+            utilisateur=authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password'])
+            if utilisateur is not None :
+                login(request,utilisateur)
+                return redirect('accueil-utilisateur',utilisateur.id)
+
+    return render(request,'monapp/login.html',{'form':form})
+
+
+
 
 
 
@@ -117,7 +137,7 @@ def ajouter_activité_programme(request,id, utilisateur_id) :
         form= Ajouter_activitéprogramme_form(initial={'programme':programme_utilisé}) 
         # méthode GET, on remplit automatiquement le champ programme avec celui utilisé
 
-    return render(request, 'monapp/ajouter_activité.html', {'form': form})
+    return render(request, 'monapp/ajouter_activité.html', {'form': form, 'utilisateur':utilisateur})
 
 
 

@@ -3,12 +3,14 @@ from datetime import date
 from datetime import timedelta
 from django.core.validators import MaxValueValidator
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractUser,BaseUserManager
 
-class Utilisateur(models.Model):
-    nom=models.fields.CharField( max_length=20)
-    prénom=models.fields.CharField(max_length=20)
-    def __str__(self) :
-        return f'{self.prénom} {self.nom}'
+
+
+
+class Utilisateur(AbstractUser):
+   pass
+   
 
 
         

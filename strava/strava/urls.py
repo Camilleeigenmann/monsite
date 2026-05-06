@@ -20,8 +20,7 @@ from monapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accueil/',views.accueil),
-    path('',views.accueil),
+    path('',views.login_page,name='login'),
     path('accueil/<int:id>/', views.accueil_utilisateur, name='accueil-utilisateur'),
     
     path('<int:id>/programmes/', views.liste_programmes, name="liste-programmes"),
