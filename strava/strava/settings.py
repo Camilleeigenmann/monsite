@@ -93,13 +93,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS':{ 'min_length':8,}
+    },
+    {
+        'NAME': 'monapp.validators.ContainsLetterValidator',
+    },
+    {
+        'NAME':'monapp.validators.ContainsNumberValidator'
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    
 ]
 
 
@@ -121,3 +126,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 AUTH_USER_MODEL='monapp.Utilisateur'
+
+LOGIN_URL='login'
+
+LOGIN_REDIRECT_URL='accueil-utilisateur'

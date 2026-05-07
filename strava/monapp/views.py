@@ -1,22 +1,38 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, redirect
 from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité
-from monapp.forms import Ajouter_activité_form, Créer_programme_form,Ajouter_activitéprogramme_form,LoginForm
+from . import forms
 from django.utils import timezone
 from django.db.models import Sum
-from django.contrib.auth import login,authenticate
-def accueil(request) :
-    utilisateurs=Utilisateur.objects.all()
-    return render(request,'monapp/accueil.html',{'utilisateurs': utilisateurs})
+from django.contrib.auth import login,authenticate,logout
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
+
+def signup(request) :
+    form=forms.SignupForm()
+    if request.method=='POST':
+        form =forms.SignupForm(request.POST)
+        if form.is_valid :
+            utilisateur=form.save()
+            login(request, user)
+            return redirect(settings.LOGIN_REDIRECT_URL,utilisateur.id)
+
+    return render(request, 'monapp/signup.html', {'form':form})
+
+
+
+def logout_utilisateur(request) :
+    logout(request)
+    return redirect('login')
 
 
 
 
 def login_page(request):
-    form=LoginForm()
+    form=forms.LoginForm()
     
     if request.method == 'POST':
-        form=LoginForm(request.POST)
+        form=forms.LoginForm(request.POST)
         if form.is_valid() :
             utilisateur=authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password'])
             if utilisateur is not None :
@@ -29,7 +45,7 @@ def login_page(request):
 
 
 
-
+@login_required
 def accueil_utilisateur(request, id ):
     utilisateur=Utilisateur.objects.get(id=id)
     now=timezone.now()
@@ -127,14 +143,14 @@ def ajouter_activité_programme(request,id, utilisateur_id) :
     programme_utilisé= Programme.objects.get(id=id)
     utilisateur=Utilisateur.objects.get(id=utilisateur_id)
     if request.method =='POST' :
-        form =Ajouter_activitéprogramme_form(request.POST)
+        form =forms.Ajouter_activitéprogramme_form(request.POST)
         if form.is_valid() :
             activité= form.save(commit=False)   # arrêter la création de l'objet pour remplir le champ utilisateur avec l'id donnée
             activité.utilisateur= utilisateur   #lier mannuellement l'activité à un utilisateur(pas son id)
             activité.save()    # créer une nouvelle activité et la stocker dans la db
             return redirect('activité-détails',activité.id)    # redirige vers la liste d'activités de l'utilisateur
     else :
-        form= Ajouter_activitéprogramme_form(initial={'programme':programme_utilisé}) 
+        form= forms.Ajouter_activitéprogramme_form(initial={'programme':programme_utilisé}) 
         # méthode GET, on remplit automatiquement le champ programme avec celui utilisé
 
     return render(request, 'monapp/ajouter_activité.html', {'form': form, 'utilisateur':utilisateur})
@@ -144,14 +160,14 @@ def ajouter_activité_programme(request,id, utilisateur_id) :
 def créer_programme(request,id) :
     utilisateur_utilisé=Utilisateur.objects.get(id=id)
     if request.method =='POST' :
-        form =Créer_programme_form(request.POST)
+        form =forms.Créer_programme_form(request.POST)
         if form.is_valid() :
             programmecréé= form.save(commit=False)   # arrêter la création de l'objet pour remplir le champ utilisateur avec l'id donnée
             programmecréé.utilisateur= utilisateur_utilisé    #lier mannuellement le programme à un utilisateur(pas son id)
             programmecréé.save()    # créer un nouveau programme et le stocker dans la db
             return redirect('programme-détails',programmecréé.id, utilisateur_utilisé.id)    # redirige vers les détails du programme créé
     else :
-        form= Créer_programme_form() # méthode GET
+        form= forms.Créer_programme_form() # méthode GET
 
     return render(request, 'monapp/créer_programme.html', {'form': form, 'utilisateur':utilisateur_utilisé})
 
@@ -161,14 +177,14 @@ def modifier_programme(request,id) :
     programmecréé = Programme.objects.get(id=id)
     utilisateur=programmecréé.utilisateur
     if request.method =='POST' :
-        form =Créer_programme_form(request.POST,instance=programmecréé) # on pré-rempli un formulaire avec un programme perso déjà existant
+        form =forms.Créer_programme_form(request.POST,instance=programmecréé) # on pré-rempli un formulaire avec un programme perso déjà existant
         if form.is_valid :
             # mettre à jour le programme créé déjà existante
             form.save() 
             # rediriger vers les détails du programme créé
             return redirect('programme-détails', programmecréé.id, programmecréé.utilisateur.id)
     else :
-        form = Créer_programme_form(instance=programmecréé)
+        form = forms.Créer_programme_form(instance=programmecréé)
 
     return render(request, 'monapp/modifier_programme.html', {'form': form, 'programmecréé':programmecréé, 'utilisateur':utilisateur})
 
@@ -204,14 +220,14 @@ def activité_détails(request,id):
 def ajouter_activité(request,id) :
     utilisateur_utilisé=Utilisateur.objects.get(id=id)
     if request.method =='POST' :
-        form =Ajouter_activité_form(request.POST)
+        form =forms.Ajouter_activité_form(request.POST)
         if form.is_valid() :
             activité= form.save(commit=False)   # arrêter la création de l'objet pour remplir le champ utilisateur avec l'id donnée
             activité.utilisateur= utilisateur_utilisé    #lier mannuellement l'activité à un utilisateur(pas son id)
             activité.save()    # créer une nouvelle activité et la stocker dans la db
             return redirect('activité-détails',activité.id)    # redirige vers les détails de activités de l'utilisateur
     else :
-        form= Ajouter_activité_form() # méthode GET
+        form= forms.Ajouter_activité_form() # méthode GET
 
     return render(request, 'monapp/ajouter_activité.html', {'form': form,'utilisateur':utilisateur_utilisé})
 
@@ -219,14 +235,14 @@ def modifier_activité(request,id) :
     activité = Activité.objects.get(id=id)
     utilisateur=activité.utilisateur
     if request.method =='POST' :
-        form =Ajouter_activité_form(request.POST,instance=activité) # on pré-rempli un formulaire avec une activité déjà existant
+        form =forms.Ajouter_activité_form(request.POST,instance=activité) # on pré-rempli un formulaire avec une activité déjà existant
         if form.is_valid :
             # mettre à jour l'activité déjà existante
             form.save() 
             # rediriger vers les détails de l'activité
             return redirect('activité-details', activité.id)
     else :
-        form = Ajouter_activité_form(instance=activité)
+        form = forms.Ajouter_activité_form(instance=activité)
 
     return render(request, 'monapp/modifier_activité.html', {'form': form, 'activité':activité, 'utilisateur':utilisateur})
 

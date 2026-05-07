@@ -21,7 +21,9 @@ from monapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.login_page,name='login'),
+    path('logout/',views.logout_utilisateur,name='logout'),
     path('accueil/<int:id>/', views.accueil_utilisateur, name='accueil-utilisateur'),
+    path('signup/',views.signup, name='signup'),
     
     path('<int:id>/programmes/', views.liste_programmes, name="liste-programmes"),
     path('programmes/<int:id>/<int:utilisateur_id>/', views.programme_détails, name="programme-détails"),

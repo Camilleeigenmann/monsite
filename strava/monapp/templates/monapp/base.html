@@ -8,10 +8,13 @@
     <body>
         
         {% block content %}{% endblock %}
+        {% if utilisateur.is_authenticated %}
         <footer>
             <a href="{% url 'accueil-utilisateur' utilisateur.id %}">Accueil</a>
             <a href="{% url 'liste-activités' utilisateur.id %}">Activités</a>
             <a href="{% url 'liste-programmes' utilisateur.id %}">Bibliothèque de programme</a>
+            <a href="{% url 'logout' %}">Se déconnecter</a>
         </footer>
+        {% endif %}
     </body>
 </html>

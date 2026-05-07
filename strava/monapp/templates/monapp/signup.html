@@ -1,0 +1,14 @@
+<html>
+    <head></head>
+    <body>
+        <h1>Inscription</h1>
+        {% if form.errors %}
+          {{form.errors}}
+        {% endif %}
+        <form method="post">
+            {{form.as_p}}
+            {% csrf_token %}
+            <button type="submit">S'inscrire</button>
+        </form>
+    </body>
+</html>
