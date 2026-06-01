@@ -1,19 +1,19 @@
 {% load static %}
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'monapp/base.css' %}">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
         {% block extra_css %}{% endblock %} 
         <!-- pour permettre de lier un html à un css propre à lui -->
     </head>
-    <body>
+    <body style="padding-bottom: 50px;">
         
         {% block content %}{% endblock %}
         {% if utilisateur.is_authenticated %}
-        <footer>
-            <a href="{% url 'accueil-utilisateur' utilisateur.id %}">Accueil</a>
-            <a href="{% url 'liste-activités' utilisateur.id %}">Activités</a>
-            <a href="{% url 'liste-programmes' utilisateur.id %}">Bibliothèque de programme</a>
-            <a href="{% url 'logout' %}">Se déconnecter</a>
+        <footer class=" w3-bottom w3-text-blue w3-bar"  >
+            <a class="w3-button w3-bar-item" href="{% url 'accueil-utilisateur' utilisateur.id %}">Accueil</a>
+            <a class="w3-button w3-bar-item" href="{% url 'liste-activités' utilisateur.id %}">Activités</a>
+            <a class="w3-button w3-bar-item" href="{% url 'liste-programmes' utilisateur.id %}">Bibliothèque de programme</a>
+            <a class="w3-button w3-bar-item" href="{% url 'logout' %}">Se déconnecter</a>
         </footer>
         {% endif %}
     </body>

@@ -3,22 +3,24 @@
 {% load monapp.durée_format %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'monapp/accueil_utilisateur.css'%}" >
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css" >
 {% endblock %}
 
 {% block content %}
 
 <h3>{{utilisateur.get_username}}</h3>
+<br><br>
 {% if utilisateur.profile_photo %}
 <img src="{{utilisateur.profile_photo.url}}" >
 {% else %}
 <img src="{% static 'monapp/images/profil_defaut.jpg'%}" >
 {% endif %}
-<a href="{% url 'upload-profile-photo' utilisateur.id %}">Modifier</a>
+<br>
+<div class="w3-button w3-border w3-blue "><a href="{% url 'upload-profile-photo' utilisateur.id %}">Modifier</a></div>
 
 <br><br><br>
-<div class="resume_mois_et_annee">
-    <div class="resume_du_mois">
+<div class="w3-container w3-flex" style="gap:15px">
+    <div class="w3-container">
         <h2>Vos activités du mois ({{mois_actuel}}) :</h2>
         {% if activites_du_mois %}
         <div> Vous avez fait {{activites_du_mois|length}} activités ce mois-ci, dont :</div>
@@ -34,7 +36,7 @@
 
         
     </div>
-    <div class="resume_annee">
+    <div class="w3-container">
         <h2>Vos activités de l'année ({{annee_actuelle}}):</h2>
         {% if activites_annee %}
         <div> Vous avez fait {{activites_annee|length}} activités cette année, dont:</div>

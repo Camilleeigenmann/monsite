@@ -14,7 +14,7 @@ def signup(request) :
         form =forms.SignupForm(request.POST)
         if form.is_valid :
             utilisateur=form.save()
-            login(request, user)
+            login(request,utilisateur)
             return redirect(settings.LOGIN_REDIRECT_URL,utilisateur.id)
 
     return render(request, 'monapp/signup.html', {'form':form})
