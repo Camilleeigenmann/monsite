@@ -4,13 +4,16 @@
 {% load monapp.durée_format %}
 
 {% block extra_css %}
-   <link rel="stylesheet" href="{% static 'monapp/liste_activités.css' %}">
+   <link rel="stylesheet" href="https://w3schools.com">
 {% endblock %}
 
 {% block content %}
-<h1>Voici les activités de {{utilisateur.prénom}} {{utilisateur.nom}}</h1>
+<header>
+<h1>Voici vos activités</h1>
+<a href="{% url 'ajouter-activité' utilisateur.id %}">+</a>
+</header>
 {% for activité in activités %}
-<div class="activité"><a href="{% url 'activité-détails'  activité.id %}">
+<div class="w3-container"><a href="{% url 'activité-détails'  activité.id %}">
 
    <div class=" boîte utilisateur">{{utilisateur.prénom}} {{utilisateur.nom}}</div>
    <div class=" boîte date">{{activité.date}}</div>

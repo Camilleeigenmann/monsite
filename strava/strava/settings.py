@@ -130,3 +130,6 @@ AUTH_USER_MODEL='monapp.Utilisateur'
 LOGIN_URL='login'
 
 LOGIN_REDIRECT_URL='accueil-utilisateur'
+
+MEDIA_URL='/media/'
+MEDIA_ROOT=BASE_DIR.joinpath('media/')

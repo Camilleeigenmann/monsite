@@ -41,8 +41,16 @@ def login_page(request):
 
     return render(request,'monapp/login.html',{'form':form})
 
-
-
+@login_required
+def upload_profile_photo(request,id):
+    utilisateur=Utilisateur.objects.get(id=id)
+    form=forms.UploadProfilePhotoForm(instance=utilisateur)
+    if request.method=='POST' :
+        form=forms.UploadProfilePhotoForm(request.POST,request.FILES, instance=utilisateur)
+        if form.is_valid:
+            form.save()
+            return redirect('accueil-utilisateur', id)
+    return render(request, 'monapp/upload_profile_photo.html',{'form':form, 'utilisateur':utilisateur})
 
 
 @login_required
@@ -113,6 +121,7 @@ def accueil_utilisateur(request, id ):
 
 
 
+@login_required
 def liste_programmes(request,id):
     utilisateur=Utilisateur.objects.get(id=id)
 
@@ -133,12 +142,15 @@ def liste_programmes(request,id):
     'programmes_technique':programmes_technique,'programmes_puissance':programmes_puissance,'programmes_endurance':programmes_endurance,'programmes_autre':programmes_autre,
     'programmescréés_technique':programmescréés_technique,'programmescréés_puissance':programmescréés_puissance,'programmescréés_endurance':programmescréés_endurance,'programmescréés_autre':programmescréés_autre})
 
+
+@login_required
 def programme_détails(request,id,utilisateur_id) :
     programme=Programme.objects.get(id=id) #pour donner les détails d'un programme en particulier
     utilisateur=Utilisateur.objects.get(id=utilisateur_id)
     return render(request, 'monapp/programme_détails.html', {'programme': programme,'utilisateur':utilisateur})
 
 
+@login_required
 def ajouter_activité_programme(request,id, utilisateur_id) :
     programme_utilisé= Programme.objects.get(id=id)
     utilisateur=Utilisateur.objects.get(id=utilisateur_id)
@@ -157,6 +169,7 @@ def ajouter_activité_programme(request,id, utilisateur_id) :
 
 
 
+@login_required
 def créer_programme(request,id) :
     utilisateur_utilisé=Utilisateur.objects.get(id=id)
     if request.method =='POST' :
@@ -173,6 +186,7 @@ def créer_programme(request,id) :
 
     
 
+@login_required
 def modifier_programme(request,id) :
     programmecréé = Programme.objects.get(id=id)
     utilisateur=programmecréé.utilisateur
@@ -188,6 +202,7 @@ def modifier_programme(request,id) :
 
     return render(request, 'monapp/modifier_programme.html', {'form': form, 'programmecréé':programmecréé, 'utilisateur':utilisateur})
 
+@login_required
 def supprimer_programme(request,id) :
     programmecréé= Programme.objects.get(id=id)
     utilisateur=programmecréé.utilisateur
@@ -202,7 +217,7 @@ def supprimer_programme(request,id) :
 
 
 
-
+@login_required
 def liste_activités(request,id) :
     utilisateur=Utilisateur.objects.get(id=id)
     activités=Activité.objects.filter(utilisateur=id).order_by('-date') #ordonner du plus récent au moins récent
@@ -210,6 +225,8 @@ def liste_activités(request,id) :
 # les activités liés à cet utilisateur seront donc séléctionnées puis affichées (un seul dictionnaire sinon ça bug)
     return render(request, 'monapp/liste_activités.html', {'activités':activités , 'utilisateur': utilisateur})
 
+
+@login_required
 def activité_détails(request,id):
     activité=Activité.objects.get(id=id)
     programme=activité.programme
@@ -217,6 +234,7 @@ def activité_détails(request,id):
 
     return render(request,'monapp/activité_détails.html', {'activité':activité, 'programme':programme , 'utilisateur':utilisateur})
 
+@login_required
 def ajouter_activité(request,id) :
     utilisateur_utilisé=Utilisateur.objects.get(id=id)
     if request.method =='POST' :
@@ -231,6 +249,7 @@ def ajouter_activité(request,id) :
 
     return render(request, 'monapp/ajouter_activité.html', {'form': form,'utilisateur':utilisateur_utilisé})
 
+@login_required
 def modifier_activité(request,id) :
     activité = Activité.objects.get(id=id)
     utilisateur=activité.utilisateur
@@ -246,6 +265,7 @@ def modifier_activité(request,id) :
 
     return render(request, 'monapp/modifier_activité.html', {'form': form, 'activité':activité, 'utilisateur':utilisateur})
 
+@login_required
 def supprimer_activité(request,id) :
     activité= Activité.objects.get(id=id)
     utilisateur=activité.utilisateur

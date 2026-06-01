@@ -3,12 +3,19 @@
 {% load monapp.durée_format %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="monapp/accueil_utilisateur.css">
+<link rel="stylesheet" href="{% static 'monapp/accueil_utilisateur.css'%}" >
 {% endblock %}
 
 {% block content %}
 
-<h1> Bienvenue {{utilisateur.get_username}}</h1>
+<h3>{{utilisateur.get_username}}</h3>
+{% if utilisateur.profile_photo %}
+<img src="{{utilisateur.profile_photo.url}}" >
+{% else %}
+<img src="{% static 'monapp/images/profil_defaut.jpg'%}" >
+{% endif %}
+<a href="{% url 'upload-profile-photo' utilisateur.id %}">Modifier</a>
+
 <br><br><br>
 <div class="resume_mois_et_annee">
     <div class="resume_du_mois">

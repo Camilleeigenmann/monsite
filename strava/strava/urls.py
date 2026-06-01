@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from monapp import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,7 +26,8 @@ urlpatterns = [
     path('logout/',views.logout_utilisateur,name='logout'),
     path('accueil/<int:id>/', views.accueil_utilisateur, name='accueil-utilisateur'),
     path('signup/',views.signup, name='signup'),
-    
+    path('accueil/<int:id>/profile_photo/',views.upload_profile_photo,name='upload-profile-photo'),
+
     path('<int:id>/programmes/', views.liste_programmes, name="liste-programmes"),
     path('programmes/<int:id>/<int:utilisateur_id>/', views.programme_détails, name="programme-détails"),
 
@@ -40,3 +43,5 @@ urlpatterns = [
     path('activités/supprimer/<int:id>/', views.supprimer_activité, name="supprimer-activité"),
 
 ]
+if settings.DEBUG :
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

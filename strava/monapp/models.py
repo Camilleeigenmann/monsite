@@ -9,7 +9,7 @@ from django.contrib.auth.models import AbstractUser,BaseUserManager
 
 
 class Utilisateur(AbstractUser):
-   pass
+   profile_photo=models.ImageField(null=True, verbose_name='Photo de profil')
    
 
 
