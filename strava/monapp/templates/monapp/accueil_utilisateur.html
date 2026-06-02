@@ -18,9 +18,9 @@
 <br>
 <div class="w3-button w3-border w3-blue "><a href="{% url 'upload-profile-photo' utilisateur.id %}">Modifier</a></div>
 
-<br><br><br>
+<br><br><br><br><br>
 <div class="w3-container w3-flex" style="gap:15px">
-    <div class="w3-container">
+    <div class="w3-container w3-card">
         <h2>Vos activités du mois ({{mois_actuel}}) :</h2>
         {% if activites_du_mois %}
         <div> Vous avez fait {{activites_du_mois|length}} activités ce mois-ci, dont :</div>
@@ -36,7 +36,7 @@
 
         
     </div>
-    <div class="w3-container">
+    <div class="w3-container w3-card">
         <h2>Vos activités de l'année ({{annee_actuelle}}):</h2>
         {% if activites_annee %}
         <div> Vous avez fait {{activites_annee|length}} activités cette année, dont:</div>

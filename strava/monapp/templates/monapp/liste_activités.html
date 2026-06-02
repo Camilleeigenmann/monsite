@@ -10,10 +10,12 @@
 {% block content %}
 <header>
 <h1>Voici vos activités</h1>
-<div class="w3-button w3-center w3-card-4"><a href="{% url 'ajouter-activité' utilisateur.id %}">+</a></div>
+<div style="position:fixed;top: 0%; right: 0%;" class="w3-button w3-circle w3-card"><a href="{% url 'ajouter-activité' utilisateur.id %}">+</a></div>
 </header>
+<div class="w3-container w3-flex w3-center " style="flex-direction: column; gap: 10px; align-items: center; justify-content: center;">
 {% for activité in activités %}
-<div class="w3-container"><a href="{% url 'activité-détails'  activité.id %}">
+<div style="width: fit-content;" class=" w3-container w3-center w3-card">
+   <a class="w3-button" style="text-decoration: none;" href="{% url 'activité-détails'  activité.id %}">
 
    <div >{{utilisateur.prénom}} {{utilisateur.nom}}</div>
    <div >{{activité.date}}</div>
@@ -23,8 +25,6 @@
          <div>{{activité.programme.titre}}</div>
       {% elif activité.programmecréé %}
          <div>{{activité.programmecréé.titre}}</div>
-      {% else %}
-         <div>Appuyez pour voir la description</div>
       {% endif %}
 
    <div >{{activité.durée|durée_format}}</div>
@@ -32,9 +32,6 @@
 </a></div>
 
 {% endfor %}
-<footer>
-   <a href="{% url 'ajouter-activité' utilisateur.id %}">Ajouter une activité </a>
-   <a href="{% url 'liste-programmes' utilisateur.id %}">Voir les programmes</a>
-</footer>
+</div>
 
 {% endblock %}
