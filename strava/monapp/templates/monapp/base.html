@@ -9,7 +9,7 @@
         
         {% block content %}{% endblock %}
         {% if utilisateur.is_authenticated %}
-        <footer class=" w3-bottom w3-text-blue w3-bar"  >
+        <footer class=" w3-bottom w3-text-white w3-black w3-bar" style=" display: flex;justify-content: space-between;" >
             <a class="w3-button w3-bar-item" href="{% url 'accueil-utilisateur' utilisateur.id %}">Accueil</a>
             <a class="w3-button w3-bar-item" href="{% url 'liste-activités' utilisateur.id %}">Activités</a>
             <a class="w3-button w3-bar-item" href="{% url 'liste-programmes' utilisateur.id %}">Bibliothèque de programme</a>
