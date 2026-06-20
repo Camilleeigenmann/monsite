@@ -23,11 +23,10 @@
    <div >{{activité.date}}</div>
    <div>{{activité.but}}</div>
 
-      {% if activité.programme  %}
-         <div>{{activité.programme.titre}}</div>
-      {% elif activité.programmecréé %}
-         <div>{{activité.programmecréé.titre}}</div>
+      {% if activité.programme or activité.programmecréé  %}
+      <div>Programme inclus</div>
       {% endif %}
+     
 
    <div >{{activité.durée|durée_format}}</div>
 
