@@ -8,18 +8,23 @@
 
 {% block content %}
 <div class="w3-container w3-flex">
-  {% if utilisateur.profile_photo %}
-  <img class="w3-circle" style="height: 150px; width: 150px;object-fit: cover;" src="{{utilisateur.profile_photo.url}}" >
-  {% else %}
-  <img src="{% static 'monapp/images/profil_defaut.jpg'%}" >
-  {% endif %}
-  <h3>{{utilisateur.get_username}}</h3>
+    <div class="w3-container w3-flex" style="flex-direction: column;">
+        {% if utilisateur.profile_photo %}
+        <img class="w3-circle" style="height: 150px; width: 150px;object-fit: cover;" src="{{utilisateur.profile_photo.url}}" >
+        {% else %}
+        <img src="{% static 'monapp/images/profil_defaut.jpg'%}" >
+        {% endif %}
+        <br><br>
+        <div class="w3-button w3-border w3-black w3-text-white "><a href="{% url 'upload-profile' utilisateur.id %}">Modifier</a></div>
+
+    </div>
+    <h3>{{utilisateur.get_username}}</h3>
 </div>
-<div class="w3-button w3-border w3-black w3-text-white "><a href="{% url 'upload-profile-photo' utilisateur.id %}">Modifier</a></div>
+
 
 <br><br><br><br><br>
 <div class="w3-container w3-flex" style="gap:15px">
-    <div class="w3-container w3-card w3-green">
+    <div class="w3-container w3-card w3-blue">
         <h2>Vos activités du mois ({{mois_actuel}}) :</h2>
         {% if activites_du_mois %}
         <div> Vous avez fait {{activites_du_mois|length}} activités ce mois-ci, dont :</div>
@@ -35,7 +40,7 @@
 
         
     </div>
-    <div class="w3-container w3-card w3-green">
+    <div class="w3-container w3-card w3-blue">
         <h2>Vos activités de l'année ({{annee_actuelle}}):</h2>
         {% if activites_annee %}
         <div> Vous avez fait {{activites_annee|length}} activités cette année, dont:</div>
@@ -52,4 +57,24 @@
         {% endif %}
     </div>
 </div>
+<br><br>
+    <div>
+        {% if activites_utilisateur %}
+        <div>Votre dernière activité :</div>
+        <br>
+        <div style="width:200px;" class=" w3-container w3-center w3-card w3-hover-white w3-blue">
+        <a class="w3-button" style="text-decoration: none;" href="{% url 'activité-détails' derniere_activite.id %}">
+          <div >{{utilisateur.prénom}} {{utilisateur.nom}}</div>
+          <div >{{derniere_activite.date}}</div>
+          <div>{{derniere_activite.but}}</div>
+
+          {% if derniere_activite.programme or derniere_activite.programmecréé  %}
+          <div>Programme inclus</div>
+          {% endif %}
+     
+
+          <div >{{derniere_activite.durée|durée_format}}</div>
+        </a></div>
+        {% endif %}
+    </div>
 {% endblock %}

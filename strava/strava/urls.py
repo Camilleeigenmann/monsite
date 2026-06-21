@@ -26,7 +26,7 @@ urlpatterns = [
     path('logout/',views.logout_utilisateur,name='logout'),
     path('accueil/<int:id>/', views.accueil_utilisateur, name='accueil-utilisateur'),
     path('signup/',views.signup, name='signup'),
-    path('accueil/<int:id>/profile_photo/',views.upload_profile_photo,name='upload-profile-photo'),
+    path('accueil/<int:id>/profile/',views.upload_profile,name='upload-profile'),
 
     path('<int:id>/programmes/', views.liste_programmes, name="liste-programmes"),
     path('programmes/<int:id>/<int:utilisateur_id>/', views.programme_détails, name="programme-détails"),

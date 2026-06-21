@@ -42,11 +42,11 @@ def login_page(request):
     return render(request,'monapp/login.html',{'form':form})
 
 @login_required
-def upload_profile_photo(request,id):
+def upload_profile(request,id):
     utilisateur=Utilisateur.objects.get(id=id)
-    form=forms.UploadProfilePhotoForm(instance=utilisateur)
+    form=forms.UploadProfileForm(instance=utilisateur)
     if request.method=='POST' :
-        form=forms.UploadProfilePhotoForm(request.POST,request.FILES, instance=utilisateur)
+        form=forms.UploadProfileForm(request.POST,request.FILES, instance=utilisateur)
         if form.is_valid:
             form.save()
             return redirect('accueil-utilisateur', id)
@@ -59,6 +59,9 @@ def accueil_utilisateur(request, id ):
     now=timezone.now()
     mois_actuel=now.month
     annee_actuelle=now.year
+    
+    activites_utilisateur=Activité.objects.filter(utilisateur_id=utilisateur.id)
+    derniere_activite=activites_utilisateur.latest('date') #selectionner la derniere activité
 
     activites_du_mois=Activité.objects.filter(utilisateur_id=utilisateur.id,date__year=now.year,date__month=now.month)
     #prends uniquement les activités créées le mois se déroulant actuellement grâce à timezone.now().month/year
@@ -117,7 +120,8 @@ def accueil_utilisateur(request, id ):
     ,'nb_activites_grimpe_libre_mois':nb_activites_grimpe_libre_mois
     ,'nb_activites_technique_annee':nb_activites_technique_annee,'nb_activites_puissance_annee':nb_activites_puissance_annee
     ,'nb_activites_endurance_annee':nb_activites_autre_mois,'nb_activites_autre_annee':nb_activites_autre_annee
-    ,'nb_activites_grimpe_libre_annee':nb_activites_grimpe_libre_annee})
+    ,'nb_activites_grimpe_libre_annee':nb_activites_grimpe_libre_annee
+    ,'derniere_activite':derniere_activite, 'activites_utilisateur':activites_utilisateur})
 
 
 
