@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, redirect
-from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité
+from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité,Photo
 from . import forms
 from django.utils import timezone
 from django.db.models import Sum
@@ -50,7 +50,22 @@ def upload_profile(request,id):
         if form.is_valid:
             form.save()
             return redirect('accueil-utilisateur', id)
-    return render(request, 'monapp/upload_profile_photo.html',{'form':form, 'utilisateur':utilisateur})
+    return render(request, 'monapp/upload_profile.html',{'form':form, 'utilisateur':utilisateur})
+
+
+def ajouter_photo(request,id) :
+    utilisateur=Utilisateur.objects.get(id=id)
+    if request.method=='POST':
+        form=forms.AjouterPhotoForm(request.POST, request.FILES)
+        if form.is_valid:
+            photo=form.save(commit=False)
+            photo.utilisateur=utilisateur
+            photo.save()
+            return redirect('accueil-utilisateur', utilisateur.id)
+    else :
+        form=forms.AjouterPhotoForm()
+    
+    return render(request, 'monapp/ajouter_photo.html', {'utilisateur':utilisateur,'form':form})
 
 
 @login_required
@@ -108,6 +123,9 @@ def accueil_utilisateur(request, id ):
             nb_activites_autre_annee +=1
         if activite.but=='Grimpe libre' :
             nb_activites_grimpe_libre_annee +=1
+    
+
+    photos=Photo.objects.filter(utilisateur_id=utilisateur.id).order_by('-date') #recupere les photos liées à l'utilisateur en question
 
 
 
@@ -121,7 +139,8 @@ def accueil_utilisateur(request, id ):
     ,'nb_activites_technique_annee':nb_activites_technique_annee,'nb_activites_puissance_annee':nb_activites_puissance_annee
     ,'nb_activites_endurance_annee':nb_activites_autre_mois,'nb_activites_autre_annee':nb_activites_autre_annee
     ,'nb_activites_grimpe_libre_annee':nb_activites_grimpe_libre_annee
-    ,'derniere_activite':derniere_activite, 'activites_utilisateur':activites_utilisateur})
+    ,'derniere_activite':derniere_activite, 'activites_utilisateur':activites_utilisateur,
+    'photos':photos})
 
 
 
@@ -152,6 +171,25 @@ def programme_détails(request,id,utilisateur_id) :
     programme=Programme.objects.get(id=id) #pour donner les détails d'un programme en particulier
     utilisateur=Utilisateur.objects.get(id=utilisateur_id)
     return render(request, 'monapp/programme_détails.html', {'programme': programme,'utilisateur':utilisateur})
+
+
+
+def ajouter_activité_photo(request, id, utilisateur_id):
+    activite=Activité.objects.get(id=id)
+    utilisateur=Utilisateur.objects.get(id=utilisateur_id)
+    if request.method=='POST' :
+        form=forms.AjouterPhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            photo=form.save(commit=False)
+            photo.utilisateur=utilisateur
+            photo.activite_liee=activite
+            photo.save()
+            return redirect('activité-détails',activite.id)
+    else :
+        form=forms.AjouterPhotoForm()
+    
+    return render(request, 'monapp/ajouter_photo.html', {'form':form, 'utilisateur':utilisateur,'activite':activite})
+
 
 
 @login_required
@@ -235,8 +273,10 @@ def activité_détails(request,id):
     activité=Activité.objects.get(id=id)
     programme=activité.programme
     utilisateur=activité.utilisateur
+    photos=Photo.objects.filter(utilisateur_id=utilisateur.id, activite_liee_id=activité.id).order_by('-date')
 
-    return render(request,'monapp/activité_détails.html', {'activité':activité, 'programme':programme , 'utilisateur':utilisateur})
+
+    return render(request,'monapp/activité_détails.html', {'activité':activité, 'programme':programme , 'utilisateur':utilisateur,'photos':photos})
 
 @login_required
 def ajouter_activité(request,id) :

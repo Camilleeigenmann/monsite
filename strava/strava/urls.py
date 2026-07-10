@@ -31,16 +31,20 @@ urlpatterns = [
     path('<int:id>/programmes/', views.liste_programmes, name="liste-programmes"),
     path('programmes/<int:id>/<int:utilisateur_id>/', views.programme_détails, name="programme-détails"),
 
-    path('programmes/créer/<int:id>/', views.créer_programme, name="créer-programme"),
+    path('programmes/creer/<int:id>/', views.créer_programme, name="créer-programme"),
     path('programmes/modifier/<int:id>/', views.modifier_programme,name="modifier-programme"),
     path('programmes/supprimer/<int:id>/', views.supprimer_programme,name="supprimer-programme"),
-    path('programmes/<int:id>/<int:utilisateur_id>/activités/ajouter/', views.ajouter_activité_programme, name="ajouter-activité-programme"),
+    path('programmes/<int:id>/<int:utilisateur_id>/activites/ajouter/', views.ajouter_activité_programme, name="ajouter-activité-programme"),
 
-    path('<int:id>/activités/', views.liste_activités, name="liste-activités"),
-    path('activités/<int:id>/', views.activité_détails, name="activité-détails"),
-    path('activités/ajouter/<int:id>/',views.ajouter_activité,name="ajouter-activité"),
-    path('activités/modifier/<int:id>/', views.modifier_activité, name="modifier-activité"),
-    path('activités/supprimer/<int:id>/', views.supprimer_activité, name="supprimer-activité"),
+    path('<int:id>/activites/', views.liste_activités, name="liste-activités"),
+    path('activites/<int:id>/', views.activité_détails, name="activité-détails"),
+    path('activites/ajouter/<int:id>/',views.ajouter_activité,name="ajouter-activité"),
+    path('activites/modifier/<int:id>/', views.modifier_activité, name="modifier-activité"),
+    path('activites/supprimer/<int:id>/', views.supprimer_activité, name="supprimer-activité"),
+    path('activites/<int:id>/<int:utilisateur_id>/photo/ajouter',views.ajouter_activité_photo,name="ajouter-activite-photo"),
+
+    path('<int:id>/photos/ajouter/', views.ajouter_photo, name="ajouter-photo"),
+    
 
 ]
 if settings.DEBUG :

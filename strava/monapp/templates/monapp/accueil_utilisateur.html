@@ -77,4 +77,10 @@
         </a></div>
         {% endif %}
     </div>
+<br><br><br>
+<h4>Vos photos</h4>
+    {% for photo in photos %}
+    <img style="height: 150px; width: 150px;object-fit: cover;" src="{{photo.image.url}}">
+    {% endfor %}
+<div><a class="w3-button w3-border w3-black w3-text-white" style="text-decoration: none;" href="{% url 'ajouter-photo' utilisateur.id %}">Ajouter des photos</a> </div>
 {% endblock %}

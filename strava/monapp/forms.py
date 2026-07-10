@@ -1,5 +1,5 @@
 from django import forms
-from monapp.models import Activité,Programme
+from monapp.models import Activité,Programme, Photo
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
@@ -44,6 +44,11 @@ class UploadProfileForm(forms.ModelForm):
     class Meta :
         model=get_user_model()
         fields=('profile_photo','username',)
+    
+class AjouterPhotoForm(forms.ModelForm) :
+    class Meta :
+        model=Photo
+        fields=('image',)
 
 
 

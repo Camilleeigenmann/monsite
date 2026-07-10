@@ -6,10 +6,15 @@
 {% endblock %}
 
 {% block content %}
-<h1>Modifiez votre photo de profil</h1>
+
+{% if activite %}
+<h1>Ajouter une photo à l'activité du {{activite.date}}</h1>
+{%  else %}
+<h1>Enregistrez une photo</h1>
+{% endif %}
 <form enctype="multipart/form-data" method="post" >
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Modifier" >
+    <input type="submit" value="Enregistrer" >
 </form>
 {% endblock %}

@@ -19,7 +19,16 @@
 
 <div>Cette activité a duré {{activité.durée|durée_format}}</div>
 <br><br>
-<a href="{% url 'modifier-activité' activité.id %}">Modifier l'activité</a>
-<a href="{% url 'supprimer-activité' activité.id %}">Supprimer l'activité</a>
+<a class="w3-blue" href="{% url 'modifier-activité' activité.id %}">Modifier l'activité</a>
+<a class="w3-red" href="{% url 'supprimer-activité' activité.id %}">Supprimer l'activité</a>
+<br><br>
+{% if photos %}
+    {% for photo in photos %}
+    <img style="height: 150px; width: 150px;object-fit: cover;" src="{{photo.image.url}}">
+    {% endfor %}
+{% else %}
+<div>Vous n'avez aucune photo liée à l'activité</div>
+{% endif %}
+<div><a class="w3-button w3-border w3-black w3-text-white" style="text-decoration: none;" href="{% url 'ajouter-activite-photo' activité.id utilisateur.id %}">Lier une photo</a></div>
 
 {% endblock %}

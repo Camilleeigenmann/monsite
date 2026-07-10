@@ -78,6 +78,11 @@ class Programmeechauffement(models.Model) :
         return f'{self.titre}'
 
 
+class Photo(models.Model) :
+    utilisateur=models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+    image=models.ImageField()
+    date= models.DateField(auto_now_add=True)
+    activite_liee=models.ForeignKey(Activité,on_delete=models.SET_NULL, null=True)
 
 
 
