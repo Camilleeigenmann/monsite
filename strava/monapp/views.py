@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import HttpResponse, redirect
-from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité,Photo
+from monapp.models import Utilisateur,Programme,Programmeechauffement,Activité,Photo, Utilisateurabonnements
 from . import forms
 from django.utils import timezone
 from django.db.models import Sum
@@ -71,12 +71,15 @@ def ajouter_photo(request,id) :
 @login_required
 def accueil_utilisateur(request, id ):
     utilisateur=Utilisateur.objects.get(id=id)
+    abonnements=utilisateur.following.all().count()
+    abonnes=utilisateur.followers.all().count()
+
     now=timezone.now()
     mois_actuel=now.month
     annee_actuelle=now.year
     
     activites_utilisateur=Activité.objects.filter(utilisateur_id=utilisateur.id)
-    derniere_activite=activites_utilisateur.latest('date') #selectionner la derniere activité
+    derniere_activite=activites_utilisateur.order_by('-date').first() #sélectionner la dernière activité
 
     activites_du_mois=Activité.objects.filter(utilisateur_id=utilisateur.id,date__year=now.year,date__month=now.month)
     #prends uniquement les activités créées le mois se déroulant actuellement grâce à timezone.now().month/year
@@ -130,6 +133,7 @@ def accueil_utilisateur(request, id ):
 
 
     return render(request,'monapp/accueil_utilisateur.html', {'utilisateur':utilisateur
+    ,'abonnements':abonnements, 'abonnes':abonnes
     ,'mois_actuel':mois_actuel,'annee_actuelle':annee_actuelle
     ,'activites_du_mois':activites_du_mois,'activites_annee':activites_annee
     ,'duree_totale_mois' :duree_totale_mois,'duree_totale_annee':duree_totale_annee
@@ -141,6 +145,77 @@ def accueil_utilisateur(request, id ):
     ,'nb_activites_grimpe_libre_annee':nb_activites_grimpe_libre_annee
     ,'derniere_activite':derniere_activite, 'activites_utilisateur':activites_utilisateur,
     'photos':photos})
+
+
+
+def liste_utilisateurs(request) :
+    utilisateurs=Utilisateur.objects.all().order_by('username')
+    utilisateur=request.user
+    suivis=[]
+    nonsuivis=[]
+    for grimpeur in utilisateurs :
+        if Utilisateurabonnements.objects.filter(follower=utilisateur.id, following=grimpeur.id).exists() :
+            suivis.append(grimpeur)
+        else:
+            nonsuivis.append(grimpeur)
+    
+    
+    return render(request,'monapp/liste_utilisateurs.html', {'suivis': suivis, 'nonsuivis': nonsuivis, 'utilisateur': utilisateur})
+
+
+def abonner(request, id):
+    utilisateur_cible= Utilisateur.objects.get(id=id)
+    user=request.user
+    utilisateur=Utilisateur.objects.get(id=user.id)
+    if utilisateur != utilisateur_cible :
+        Utilisateurabonnements.objects.create(follower=utilisateur, following=utilisateur_cible)
+
+    utilisateurs= Utilisateur.objects.all().order_by('username')
+    suivis=[]
+    nonsuivis=[]
+    for grimpeur in utilisateurs :
+        if Utilisateurabonnements.objects.filter(follower=utilisateur.id, following=grimpeur.id).exists() :
+            suivis.append(grimpeur)
+        else:
+            nonsuivis.append(grimpeur)
+
+
+    return render(request, 'monapp/liste_utilisateurs.html', {'utilisateur': utilisateur,'suivis':suivis ,'nonsuivis':nonsuivis})
+    r
+
+def desabonner(request, id) :
+    utilisateur_cible= Utilisateur.objects.get(id=id)
+    user= request.user
+    utilisateur=Utilisateur.objects.get(id=user.id)
+    Utilisateurabonnements.objects.filter(follower=utilisateur.id, following=utilisateur_cible.id ).delete()
+
+    utilisateurs= Utilisateur.objects.all().order_by('username')
+    suivis=[]
+    nonsuivis=[]
+    for grimpeur in utilisateurs :
+        if Utilisateurabonnements.objects.filter(follower=utilisateur.id, following=grimpeur.id).exists() :
+            suivis.append(grimpeur)
+        else:
+            nonsuivis.append(grimpeur)
+
+
+    return render(request, 'monapp/liste_utilisateurs.html', {'utilisateur': utilisateur, 'suivis':suivis,'nonsuivis':nonsuivis})
+
+
+def profil_utilisateur(request, id) :
+    utilisateur= request.user
+    utilisateur_cible=Utilisateur.objects.get(id=id)
+    if Utilisateurabonnements.objects.filter(follower=utilisateur.id, following=utilisateur_cible.id).exists():
+        suivi=True
+    else:
+        suivi=False
+    
+    abonnes=utilisateur_cible.followers.all().count()
+    abonnements=utilisateur_cible.following.all().count()
+
+
+    return render(request, 'monapp/profil_utilisateur.html', {'utilisateur':utilisateur,'utilisateur_cible':utilisateur_cible, 'suivi':suivi
+    ,'abonnes':abonnes, 'abonnements':abonnements})
 
 
 

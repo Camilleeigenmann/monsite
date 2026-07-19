@@ -1,0 +1,64 @@
+{% extends 'monapp/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css" >
+{% endblock %}
+
+{% block content %}
+<h1 class="w3-center">Utilisateurs</h1>
+
+{% if suivis %}
+ <h3>Suivis </h3>
+  {% for grimpeur_suivi in suivis %}
+    {% if utilisateur != grimpeur_suivi %}
+      <div class="w3-container">
+        <div class="w3-container w3-flex">
+          {% if grimpeur_suivi.profile_photo %}
+          <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{{grimpeur_suivi.profile_photo.url}}" >
+          {% else %}
+          <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{% static 'monapp/images/profil_defaut.jpg' %}" >
+          {% endif %}
+          <div>{{grimpeur_suivi.get_username}}</div>
+          <div class="w3-button w3-black w3-text-white"><a style="text-decoration: none;" href="{% url 'profil-utilisateur' grimpeur_suivi.id %}">-></a></div>
+        
+        </div>
+        <br>
+        <div class="w3-container w3-flex">
+          <div class="w3-button w3-blue w3-text-white"><a style="text-decoration: none;"  href="{% url 'desabonner' grimpeur_suivi.id %}">Se désabonner</a></div>
+        </div>
+      </div>
+    <br>
+    <br>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+
+{% if nonsuivis %}
+ <h3>Nonsuivis</h3>
+  {% for grimpeur_nonsuivi in nonsuivis %}
+    {% if utilisateur != grimpeur_nonsuivi %}
+      <div class="w3-container">
+        <div class="w3-container w3-flex">
+          {% if grimpeur_nonsuivi.profile_photo %}
+          <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{{grimpeur_nonsuivi.profile_photo.url}}" >
+          {% else %}
+          <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{% static 'monapp/images/profil_defaut.jpg'%}" >
+          {% endif %}
+          <div>{{grimpeur_nonsuivi.get_username}}</div>
+          <div class="w3-button w3-black w3-text-white"><a style="text-decoration: none;" href="{% url 'profil-utilisateur' grimpeur_nonsuivi.id %}">-></a></div>
+        </div>
+        <br>
+        <div class="w3-container w3-flex">
+          <div class="w3-button w3-blue w3-text-white"><a style="text-decoration: none;"  href="{% url 'abonner' grimpeur_nonsuivi.id %}">S'abonner</a></div>
+        </div>
+      </div>
+     <br>
+     <br>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+
+{% endblock %}

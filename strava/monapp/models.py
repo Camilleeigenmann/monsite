@@ -84,7 +84,16 @@ class Photo(models.Model) :
     date= models.DateField(auto_now_add=True)
     activite_liee=models.ForeignKey(Activité,on_delete=models.SET_NULL, null=True)
 
+class Utilisateurabonnements(models.Model) :
+    follower=models.ForeignKey(Utilisateur, related_name="following", on_delete=models.CASCADE)
+    following=models.ForeignKey(Utilisateur, related_name="followers", on_delete=models.CASCADE)
+    created=models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        constraints=[models.UniqueConstraint(fields=["follower","following"], name="unique_follow")]
+        # pour faire en sorte qu'un utilisateur ne puisse pas s'abonner plusieurs fois à un autre (objet unique)
+    
+    
 
 
 

@@ -12,10 +12,10 @@ Comme son nom l'indique, Strava.grimpe est un site dont le fonctionnement se rap
 
 Voici ce dont vous aurez besoin pour installer mon projet :
 
--**Python** (La version 3.13.14 ou une plus récente)
--**Django** 
--**Un environnement virtuel**
--**pip**(gère les paquets)
+- **Python** (La version 3.13.14 ou une plus récente)
+- **Django** 
+- **Un environnement virtuel**
+- **pip**(gère les paquets)
 
 ## Installation des prérequis
 

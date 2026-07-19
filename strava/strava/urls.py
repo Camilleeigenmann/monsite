@@ -27,6 +27,10 @@ urlpatterns = [
     path('accueil/<int:id>/', views.accueil_utilisateur, name='accueil-utilisateur'),
     path('signup/',views.signup, name='signup'),
     path('accueil/<int:id>/profile/',views.upload_profile,name='upload-profile'),
+    path('utilisateurs/liste/',views.liste_utilisateurs, name='liste-utilisateurs'),
+    path('utilisateurs/<int:id>/abonner/', views.abonner, name="abonner"),
+    path('utilisateurs/<int:id>/desabonner/', views.desabonner, name="desabonner"),
+    path('utilisateurs/<int:id>/profil/', views.profil_utilisateur,name="profil-utilisateur"),
 
     path('<int:id>/programmes/', views.liste_programmes, name="liste-programmes"),
     path('programmes/<int:id>/<int:utilisateur_id>/', views.programme_détails, name="programme-détails"),
