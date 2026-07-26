@@ -1,5 +1,6 @@
 {% extends 'monapp/base.html' %}
 {% load static %}
+{% load monapp.durée_format %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css" >
@@ -25,25 +26,104 @@
     </div>
 
 </div>
+
+<div>Pour voir les activités et les programmes de {{utilisateur_cible.get_username}}, abonnez vous à lui</div>
+<div class="w3-button w3-blue w3-text-white"><a style="text-decoration: none;" href="{% url 'abonner' utilisateur_cible.id %}">S'abonner</a></div>
 {% endif %}
 
+
+
+
+
 {% if suivi == True %}
-<div class="w3-container ">
-    <div class="w3-container w3-flex">
-        {% if utilisateur_cible.profile_photo %}
-        <img class="w3-circle" style="height: 150px; width: 150px;object-fit: cover;" src="{{utilisateur_cible.profile_photo.url}}" >
-        {% else %}
-        <img src="{% static 'monapp/images/profil_defaut.jpg'%}" >
-        {% endif %}
-        <h3>{{utilisateur_cible.get_username}}</h3>
-        
-    </div>
+<header class=" w3-top w3-bar" style=" display: flex;justify-content: space-between;" >
+    <div><a class="w3-button w3-bar-item w3-text-blue" href="{% url 'profil-utilisateur' utilisateur_cible.id %}">Profil</a></div>
+    <div><a class="w3-button w3-bar-item w3-text-blue" href="{% url 'liste-activités' utilisateur_cible.id %}">Activités</a></div>
+</header>
+<div class="w3-container w3-flex " style="margin-top: 50px;">
+    
+    {% if utilisateur_cible.profile_photo %}
+    <img class="w3-circle" style="height: 150px; width: 150px;object-fit: cover;" src="{{utilisateur_cible.profile_photo.url}}" >
+    {% else %}
+    <img src="{% static 'strava/media/profil_defaut.jpg' %}" >
+    {% endif %}
+    <div class="w3-container w3-flex" style="flex-direction: column;">
+        <h2>{{utilisateur_cible.get_username}}</h2>  
     <br>
-    <div class="w3-container w3-flex">
-        <div>Abonnés : {{abonnes}}  </div>
-        <div>Abonnements : {{abonnements}}</div>
+        <div class="w3-container w3-flex">
+            <div style="margin: 10px;">Abonnés : {{abonnes}}  </div>
+            <div style="margin:10px">Abonnements : {{abonnements}}</div>
+        </div>
     </div>
 </div>
+
+<br><br><br>
+
+{% if programmes %}
+
+        {% if programmes_technique %}
+            <h4>Technique </h4>
+            <div class="w3-container w3-flex" style="overflow-x: auto;white-space: nowrap;">
+            {% for programme_technique in programmes_technique %}       
+                <div class="w3-container w3-yellow" style="margin: 10px; ">
+                <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programme_technique.id utilisateur_cible.id %}">
+                    <div class="w3-center">{{programme_technique.titre}}</div>
+                    <div class="w3-center">{{programme_technique.durée|durée_format}}</div>
+                </a></div>    
+            {% endfor %}
+            </div>
+        {% endif %}
+
+
+        {% if programmes_puissance %}
+            <h4>Puissance </h4>
+            <div class="w3-container w3-flex" style="overflow-x: auto;white-space: nowrap;">
+            {% for programme_puissance in programmes_puissance %}   
+                <div class="w3-container w3-red" style="margin: 10px; ">
+                <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programme_puissance.id utilisateur_cible.id %}">
+                    <div class="w3-center">{{programme_puissance.titre}}</div>
+                    <div class="w3-center">{{programme_puissance.durée|durée_format}}</div>
+                </a></div>               
+            {% endfor %}
+            </div>
+        {% endif %}
+
+
+        {% if programmes_endurance %}
+            <h4>Endurance</h4> 
+            <div class="w3-container w3-flex " style="overflow-x: auto;white-space: nowrap;">
+            {% for programme_endurance in programmes_endurance %}                                           
+                <div class="w3-container  w3-blue" style="margin: 10px;text-decoration: none; ">
+                <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programme_endurance.id utilisateur_cible.id %}">
+                    <div class="w3-center">{{programme_endurance.titre}}</div>
+                    <div class="w3-center " >{{programme_endurance.durée|durée_format}}</div>
+                </a></div>                
+            {% endfor %}
+            </div>
+        {% endif %}
+
+
+        {% if programmes_autre %}
+            <h4>Autre </h4>
+            <div class="w3-container w3-flex" style="overflow-x: auto;white-space: nowrap;">
+            {% for programme_autre in programmes_autre %}                                                
+                <div class="w3-container w3-purple" style="margin: 10px; ">
+                <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programme_autre.id utilisateur_cible.id %}">
+                    <div class="w3-center">{{programme_autre.titre}}</div>
+                    <div class="w3-center">{{programme_autre.durée|durée_format}}</div>
+                </a></div>
+            {% endfor %}
+            </div>                   
+        {% endif %}
+
+
+        
+
+
+
+    {% else %}
+        <div>{{utilisateur_cible.get_username}} n'a pas créé de programmes</div>
+    {% endif %} 
 {% endif %}
 
 {% endblock %}

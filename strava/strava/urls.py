@@ -41,6 +41,7 @@ urlpatterns = [
     path('programmes/<int:id>/<int:utilisateur_id>/activites/ajouter/', views.ajouter_activité_programme, name="ajouter-activité-programme"),
 
     path('<int:id>/activites/', views.liste_activités, name="liste-activités"),
+    path('<int:id>/activites/abo', views.liste_activites_abo,name="liste-activites-abo"),
     path('activites/<int:id>/', views.activité_détails, name="activité-détails"),
     path('activites/ajouter/<int:id>/',views.ajouter_activité,name="ajouter-activité"),
     path('activites/modifier/<int:id>/', views.modifier_activité, name="modifier-activité"),

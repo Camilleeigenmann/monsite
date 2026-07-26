@@ -8,11 +8,11 @@
     <body style="padding-bottom: 50px;">
         
         {% block content %}{% endblock %}
-        {% if utilisateur.is_authenticated %}
+        {% if user.is_authenticated %}
         <footer class=" w3-bottom w3-text-white w3-black w3-bar" style=" display: flex;justify-content: space-between;" >
-            <a class="w3-button w3-bar-item" href="{% url 'accueil-utilisateur' utilisateur.id %}">Accueil</a>
-            <a class="w3-button w3-bar-item" href="{% url 'liste-activités' utilisateur.id %}">Activités</a>
-            <a class="w3-button w3-bar-item" href="{% url 'liste-programmes' utilisateur.id %}">Bibliothèque de programme</a>
+            <a class="w3-button w3-bar-item" href="{% url 'accueil-utilisateur' user.id %}">Accueil</a>
+            <a class="w3-button w3-bar-item" href="{% url 'liste-activités' user.id %}">Activités</a>
+            <a class="w3-button w3-bar-item" href="{% url 'liste-programmes' user.id %}">Bibliothèque de programme</a>
             <a class="w3-buttom w3-bar-item" href="{% url 'liste-utilisateurs' %}">Suivre</a>
             <a class="w3-button w3-bar-item" href="{% url 'logout' %}">Se déconnecter</a>
         </footer>

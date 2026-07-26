@@ -21,7 +21,7 @@ class Créer_programme_form(forms.ModelForm):
 class Ajouter_activitéprogramme_form(forms.ModelForm) :
     class Meta :
         model=Activité
-        exclude=('utilisateur',)
+        exclude=('utilisateur','programme',)
         # on supprime ce champ du formulaire pour le remplir dans la view apres
         widgets={'description': forms.Textarea(attrs={'rows':5,'cols':50})}
         def __init__(self, *args, **kwargs) :

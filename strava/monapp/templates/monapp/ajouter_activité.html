@@ -12,4 +12,7 @@
     {{ form.as_p }}
     <input type="submit" value="Enregistrer" >
 </form>
+{% if programme_utilisé %}
+<div>Nom du programme utilisé: {{programme_utilisé.titre}}</div>
+{% endif %}
 {% endblock %}

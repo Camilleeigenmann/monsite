@@ -1,0 +1,38 @@
+{% extends 'monapp/base.html' %}
+{% load static %}
+{% load monapp.durée_format %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'monapp/créer_programme.css' %}">
+{% endblock %}
+
+{% block content %}
+<header class=" w3-top w3-bar" style=" display: flex;justify-content: space-between;">
+    <h1 class="w3-center" style="margin-top: 50px;">Suivis</h1>
+    <div><a class="w3-button w3-bar-item w3-text-blue" href="{% url 'liste-activités' user.id %}">Moi</a></div>
+   <div><a class="w3-button w3-bar-item w3-text-blue" href="{% url 'liste-activites-abo' user.id %}">Suivis</a></div>
+</header>
+
+
+<div class="w3-container w3-flex w3-center " style="flex-direction: column; gap: 5px; align-items: center; justify-content: center; ">
+{% for activite in activites %}
+<div style="width:200px;" class=" w3-container w3-center w3-card w3-hover-white w3-blue">
+   <a class="w3-button" style="text-decoration: none;" href="{% url 'activité-détails'  activite.id %}">
+
+   <div >{{activite.utilisateur.get_username}}</div>
+   <div >{{activite.date}}</div>
+   <div>{{activite.but}}</div>
+
+      {% if activite.programme or activite.programmecréé  %}
+      <div>Programme inclus</div>
+      {% endif %}
+     
+
+   <div >{{activite.durée|durée_format}}</div>
+
+</a></div>
+
+{% endfor %}
+</div>
+
+{% endblock %}

@@ -21,13 +21,13 @@
 <div> Ce programme a une durée d'environ {{programme.durée|durée_format}}</div>
 <br>
 
-
-<a href="{% url 'ajouter-activité-programme' programme.id utilisateur.id %}">Utiliser ce programme</a>
-{% if programme.utilisateur %}
-<a class="w3-blue" href="{% url 'modifier-programme' programme.id %}">Modifier le programme</a>
-<a class="w3-red" href="{% url 'supprimer-programme' programme.id %}">Supprimer le programme</a>
+{% if utilisateur == user %}
+   <a href="{% url 'ajouter-activité-programme' programme.id utilisateur.id %}">Utiliser ce programme</a>
+   {% if programme.utilisateur %}
+   <a class="w3-blue" href="{% url 'modifier-programme' programme.id %}">Modifier le programme</a>
+   <a class="w3-red" href="{% url 'supprimer-programme' programme.id %}">Supprimer le programme</a>
+   {% endif %}
 {% endif %}
-
 {% endblock %}
 
 
