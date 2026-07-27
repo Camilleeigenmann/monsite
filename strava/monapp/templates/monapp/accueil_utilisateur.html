@@ -19,8 +19,22 @@
     </div>
     <br>
     <div class="w3-container w3-flex" style="gap: 15px;">
-        <div>Abonnés : {{abonnes}}  </div>
-        <div>Abonnements : {{abonnements}}</div>
+        <div class="w3-dropdown-hover">Abonnés : <span class="w3-button">{{abonnes}}</span>
+            <div class="w3-dropdown-content w3-border w3-bar-block">
+                {% for abonne in abonnes_dt %}
+                <a class="w3-bar-item" href="{% url 'profil-utilisateur' abonne.id %}">{{abonne.get_username}}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="w3-dropdown-hover">Abonnements : <span class="w3-button">{{abonnements}}</span>
+            <div class="w3-dropdown-content w3-border w3-bar-block">
+                {% for abonnement in abonnements_dt %}
+                <a class="w3-bar-item" href="{% url 'profil-utilisateur' abonnement.id %}">{{abonnement.get_username}}</a>
+                {% endfor %}
+            </div>
+        </div>
+           
     </div>
     <br>
     <div class="w3-button w3-border w3-black w3-text-white "><a href="{% url 'upload-profile' utilisateur.id %}">Modifier</a></div>

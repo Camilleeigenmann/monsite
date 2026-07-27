@@ -34,7 +34,7 @@ class Programme(models.Model) :
     description= models.fields.CharField(max_length=500)
     nombre_exercices=models.fields.IntegerField(null=True, blank=True)
     durée=models.DurationField(validators=[validate_max_duration],default=timedelta(hours=2))
-    utilisateur=models.ForeignKey(Utilisateur,null=True, on_delete=models.CASCADE)
+    utilisateur=models.ForeignKey(Utilisateur,null=True, on_delete=models.CASCADE, blank=True)
     def __str__(self) :
         return f'{self.titre}'
     

@@ -20,10 +20,10 @@
 <div style="position:fixed;top: 5%; right: 0%;" class="w3-button w3-black w3-circle w3-card"><a style="text-decoration: none;" href="{% url 'ajouter-activité' utilisateur.id %}">+</a></div>
 </header>
 {% else %}
+<h1 class="w3-center" style="margin-top: 50px;">Activités</h1>
 <header class=" w3-top w3-bar" style=" display: flex;justify-content: space-between;" >
-    <h1 class="w3-center" style="margin-top: 50px;">Activités</h1>
-    <div><a class="w3-button w3-bar-item w3-text-blue" href="{% url 'profil-utilisateur' utilisateur.id %}">Profil</a></div>
-    <div><a class="w3-button w3-bar-item w3-text-blue" href="{% url 'liste-activités' utilisateur.id %}">Activités</a></div>
+   <div><a class="w3-button w3-bar-item w3-text-blue" href="{% url 'profil-utilisateur' utilisateur.id %}">Profil</a></div>
+   <div><a class="w3-button w3-bar-item w3-text-blue" href="{% url 'liste-activités' utilisateur.id %}">Activités</a></div>
 </header>
 {% endif %}
 

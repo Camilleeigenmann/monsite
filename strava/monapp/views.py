@@ -73,9 +73,21 @@ def ajouter_photo(request,id) :
 @login_required
 def accueil_utilisateur(request, id ):
     user=request.user
-    utilisateur=Utilisateur.objects.get(id=id)
+    utilisateur=Utilisateur.objects.get(id=user.id)
+
     abonnements=utilisateur.following.all().count()
     abonnes=utilisateur.followers.all().count()
+    abonnements_ids=utilisateur.following.all()
+    abonnes_ids=utilisateur.followers.all()
+    abonnements_dt=[]
+    abonnes_dt=[]
+
+    for abonne in abonnes_ids :
+        abonnes_dt.append(abonne.follower)
+    for abonnement in abonnements_ids :
+        abonnements_dt.append(abonnement.following)
+
+
 
     now=timezone.now()
     mois_actuel=now.month
@@ -136,8 +148,9 @@ def accueil_utilisateur(request, id ):
 
 
     return render(request,'monapp/accueil_utilisateur.html', {'utilisateur':utilisateur,'user':user
-    ,'abonnements':abonnements, 'abonnes':abonnes
-    ,'mois_actuel':mois_actuel,'annee_actuelle':annee_actuelle
+    ,'abonnements':abonnements, 'abonnes':abonnes,'abonnements_dt':abonnements_dt,'abonnes_dt':abonnes_dt
+    ,'mois_actuel':mois_actuel,'annee_actuelle':annee_actuelle, 'photos':photos
+    ,'derniere_activite':derniere_activite, 'activites_utilisateur':activites_utilisateur
     ,'activites_du_mois':activites_du_mois,'activites_annee':activites_annee
     ,'duree_totale_mois' :duree_totale_mois,'duree_totale_annee':duree_totale_annee
     ,'nb_activites_technique_mois':nb_activites_technique_mois, 'nb_activites_puissance_mois':nb_activites_puissance_mois

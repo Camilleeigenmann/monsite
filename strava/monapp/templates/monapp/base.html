@@ -13,7 +13,7 @@
             <a class="w3-button w3-bar-item" href="{% url 'accueil-utilisateur' user.id %}">Accueil</a>
             <a class="w3-button w3-bar-item" href="{% url 'liste-activités' user.id %}">Activités</a>
             <a class="w3-button w3-bar-item" href="{% url 'liste-programmes' user.id %}">Bibliothèque de programme</a>
-            <a class="w3-buttom w3-bar-item" href="{% url 'liste-utilisateurs' %}">Suivre</a>
+            <a class="w3-buttom w3-bar-item" style="text-decoration: none;" href="{% url 'liste-utilisateurs' %}">Suivre</a>
             <a class="w3-button w3-bar-item" href="{% url 'logout' %}">Se déconnecter</a>
         </footer>
         {% endif %}
