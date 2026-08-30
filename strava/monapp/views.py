@@ -77,7 +77,7 @@ def accueil_utilisateur(request, id ):
 
     abonnements=utilisateur.following.all().count()
     abonnes=utilisateur.followers.all().count()
-    abonnements_ids=utilisateur.following.all()
+    abonnements_ids=utilisateur.following.all() #renvoie tous les objets Utilisateurabonnements où l'utilisateur est un follower et a un following 
     abonnes_ids=utilisateur.followers.all()
     abonnements_dt=[]
     abonnes_dt=[]
@@ -85,7 +85,8 @@ def accueil_utilisateur(request, id ):
     for abonne in abonnes_ids :
         abonnes_dt.append(abonne.follower)
     for abonnement in abonnements_ids :
-        abonnements_dt.append(abonnement.following)
+        abonnements_dt.append(abonnement.following) #comme abonnement est un objet Utilisateurabonnement
+        #pour avoir accès à l'utilisateur suivi il faut passer par le related_name following de l'objet Utilisateurabonnement
 
 
 
@@ -100,7 +101,7 @@ def accueil_utilisateur(request, id ):
     #prends uniquement les activités créées le mois se déroulant actuellement grâce à timezone.now().month/year
     # et date__year/date__month
     duree_totale_mois=activites_du_mois.aggregate(total=Sum('durée'))['total']
-    #fais la somme de la durée des activités du mois 
+    #fais la somme de la durée des activités du mois sous la forme d'un dictionnaire
 
     nb_activites_technique_mois=0
     nb_activites_puissance_mois=0

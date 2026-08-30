@@ -22,12 +22,9 @@ class Ajouter_activitéprogramme_form(forms.ModelForm) :
     class Meta :
         model=Activité
         exclude=('utilisateur','programme',)
-        # on supprime ce champ du formulaire pour le remplir dans la view apres
+        # on supprime lee champ utilidateur du formulaire pour le remplir dans la view apres
         widgets={'description': forms.Textarea(attrs={'rows':5,'cols':50})}
-        def __init__(self, *args, **kwargs) :
-            super().__init__(*args,**kwargs)
-            #rend le champ programme inchangeable car on va introduire le programme ayant appelé ce formulaire
-            self.fields['programme'].disabled = True
+        
 
 
 class LoginForm(forms.Form):

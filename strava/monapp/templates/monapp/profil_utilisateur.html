@@ -14,7 +14,7 @@
         {% if utilisateur_cible.profile_photo %}
         <img class="w3-circle" style="height: 150px; width: 150px;object-fit: cover;" src="{{utilisateur_cible.profile_photo.url}}" >
         {% else %}
-        <img src="{% static 'monapp/images/profil_defaut.jpg' %}" >
+        <img class="w3-circle" style="height: 150px; width: 150px;object-fit: cover;" src="https://www.svgrepo.com/show/452030/avatar-default.svg" >
         {% endif %}
         <h3>{{utilisateur_cible.get_username}}</h3>
         
@@ -45,7 +45,7 @@
     {% if utilisateur_cible.profile_photo %}
     <img class="w3-circle" style="height: 150px; width: 150px;object-fit: cover;" src="{{utilisateur_cible.profile_photo.url}}" >
     {% else %}
-    <img src="{% static 'strava/media/profil_defaut.jpg' %}" >
+    <img class="w3-circle" style="height: 150px; width: 150px;object-fit: cover;"src="https://www.svgrepo.com/show/452030/avatar-default.svg" >
     {% endif %}
     <div class="w3-container w3-flex" style="flex-direction: column;">
         <h2>{{utilisateur_cible.get_username}}</h2>  

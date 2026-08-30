@@ -9,23 +9,23 @@
 <h1 class="w3-center">Utilisateurs</h1>
 
 {% if suivis %}
- <h3>Suivis </h3>
+ <h3>Suivis :</h3>
+ <br>
   {% for grimpeur_suivi in suivis %}
     {% if utilisateur != grimpeur_suivi %}
-      <div class="w3-container">
-        <div class="w3-container w3-flex">
+      
+      <div class="w3-container w3-flex w3-card w3-round-large" style="object-fit: cover;">
           {% if grimpeur_suivi.profile_photo %}
           <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{{grimpeur_suivi.profile_photo.url}}" >
           {% else %}
-          <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{% static 'monapp/images/profil_defaut.jpg' %}" >
+          <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="https://www.svgrepo.com/show/452030/avatar-default.svg" >
           {% endif %}
-          <div>{{grimpeur_suivi.get_username}}</div>
-          <div class="w3-button w3-black w3-text-white"><a style="text-decoration: none;" href="{% url 'profil-utilisateur' grimpeur_suivi.id %}">-></a></div>
+          <div class="w3-text-black"><a style="text-decoration: none;" href="{% url 'profil-utilisateur' grimpeur_suivi.id %}">{{grimpeur_suivi.get_username}}</a></div>
         
-        </div>
-        <br>
+        
+        
         <div class="w3-container w3-flex">
-          <div class="w3-button w3-blue w3-text-white"><a style="text-decoration: none;"  href="{% url 'desabonner' grimpeur_suivi.id %}">Se désabonner</a></div>
+          <div class="w3-button w3-blue w3-text-white w3-round-xlarge" style="margin-left: 20px;"><a style="text-decoration: none;"  href="{% url 'desabonner' grimpeur_suivi.id %}">Se désabonner</a></div>
         </div>
       </div>
     <br>
@@ -36,20 +36,17 @@
 
 
 {% if nonsuivis %}
- <h3>Nonsuivis</h3>
+ <h3>Non-suivis :</h3>
   {% for grimpeur_nonsuivi in nonsuivis %}
     {% if utilisateur != grimpeur_nonsuivi %}
-      <div class="w3-container">
-        <div class="w3-container w3-flex">
+      <div class="w3-container w3-flex w3-card w3round-xlarge" style="object-fit: cover;">
           {% if grimpeur_nonsuivi.profile_photo %}
           <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{{grimpeur_nonsuivi.profile_photo.url}}" >
           {% else %}
-          <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{% static 'monapp/images/profil_defaut.jpg'%}" >
+          <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="https://www.svgrepo.com/show/452030/avatar-default.svg" >
           {% endif %}
-          <div>{{grimpeur_nonsuivi.get_username}}</div>
-          <div class="w3-button w3-black w3-text-white"><a style="text-decoration: none;" href="{% url 'profil-utilisateur' grimpeur_nonsuivi.id %}">-></a></div>
-        </div>
-        <br>
+          <div class="w3-text-black"><a style="text-decoration: none;" href="{% url 'profil-utilisateur' grimpeur_nonsuivi.id %}">{{grimpeur_nonsuivi.get_username}}</a></div>
+          
         <div class="w3-container w3-flex">
           <div class="w3-button w3-blue w3-text-white"><a style="text-decoration: none;"  href="{% url 'abonner' grimpeur_nonsuivi.id %}">S'abonner</a></div>
         </div>
