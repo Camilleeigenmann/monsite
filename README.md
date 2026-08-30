@@ -6,7 +6,9 @@ Comme son nom l'indique, Strava.grimpe est un site dont le fonctionnement se rap
 
 - La première fonctionnalité principale est la création l'enregistrement d'activités dans une liste ordonnées par date de publication. Ces activités contiennent une description, un but (selon ce que l'on veut tirer de l'entraînement, comme la puissance, l'endurance etc), un durée ainsi qu'un programme ou des photos ( les deux facultatifs ).
 
-- La seconde est donc la création de programmes. Certains programmes seront proposés par défaut et l'utilisateur pourra en créer lui-même. Ces programmes sont constitués d'un titre, d'une description, d'un but, d'une durée et éventuellement d'un nombre d'exercices
+- La seconde est la création de programmes. Certains programmes seront proposés par défaut et l'utilisateur pourra en créer lui-même. Ces programmes sont constitués d'un titre, d'une description, d'un but, d'une durée et éventuellement d'un nombre d'exercices
+
+- La dernière fonctionnalité est la base du succès de l'application Strava. En effet, il est possible de suivre d'autres utilisateurs, ayant donc alors accès aux programmes d'entraînement qu'ils ont crées ainsi qu'à leurs activités. Il est donc possible de naviguer librement sur le compte d'un autre utilisateur lorsque'on est abonné à lui (il n'est tout de même pas possible de créer des programmes ou des activités à sa place, tout comme il n'est pas possible d'en modifier ou supprimer).
 
 ## Prérequis
 
