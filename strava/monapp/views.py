@@ -363,6 +363,19 @@ def supprimer_programme(request,id) :
 
 
 
+@login_required
+def copie_programme(request,id) :
+    user=request.user
+    programme= Programme.objects.get(id=id)
+    programme.pk=None
+    programme.utilisateur=user
+    programme.save()
+    return redirect('liste-programmes', user.id)
+    
+
+
+
+
 
 
 

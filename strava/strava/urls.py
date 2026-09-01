@@ -34,7 +34,7 @@ urlpatterns = [
 
     path('<int:id>/programmes/', views.liste_programmes, name="liste-programmes"),
     path('programmes/<int:id>/<int:utilisateur_id>/', views.programme_détails, name="programme-détails"),
-
+    path('programmes/<int:id>/copier/', views.copie_programme, name='copier-programme'),
     path('programmes/creer/<int:id>/', views.créer_programme, name="créer-programme"),
     path('programmes/modifier/<int:id>/', views.modifier_programme,name="modifier-programme"),
     path('programmes/supprimer/<int:id>/', views.supprimer_programme,name="supprimer-programme"),

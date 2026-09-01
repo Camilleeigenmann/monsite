@@ -28,6 +28,10 @@
    <a class="w3-red" href="{% url 'supprimer-programme' programme.id %}">Supprimer le programme</a>
    {% endif %}
 {% endif %}
+
+{% if utilisateur != user %}
+<a class="w3-green w3-round-xlarge" style="text-decoration: none;" href="{% url 'copier-programme' programme.id %}">Copier</a>
+ {% endif %}
 {% endblock %}
 
 
