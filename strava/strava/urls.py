@@ -49,6 +49,7 @@ urlpatterns = [
     path('activites/<int:id>/<int:utilisateur_id>/photo/ajouter',views.ajouter_activité_photo,name="ajouter-activite-photo"),
 
     path('<int:id>/photos/ajouter/', views.ajouter_photo, name="ajouter-photo"),
+    path('<int:id>/photos/supprimer/', views.supprimer_photo, name="supprimer-photo")
     
 
 ]

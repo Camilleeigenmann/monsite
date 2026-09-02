@@ -100,7 +100,10 @@
 <br><br><br>
 <h4>Vos photos :</h4>
     {% for photo in photos %}
+    <div class="w3-dropdown-hover">
     <img style="height: 150px; width: 150px;object-fit: cover;" src="{{photo.image.url}}">
+    <a class="w3-dropdown-content w3-button w3-text-red" style="text-decoration: none;" href="{% url 'supprimer-photo' photo.id %}">Supprimer</a>
+    </div>
     {% endfor %}
 <div><a class="w3-button w3-border w3-black w3-text-white w3-round-xlarge" style="text-decoration: none;" href="{% url 'ajouter-photo' utilisateur.id %}">Ajouter des photos</a> </div>
 {% endblock %}

@@ -70,6 +70,12 @@ def ajouter_photo(request,id) :
     return render(request, 'monapp/ajouter_photo.html', {'utilisateur':utilisateur,'form':form,'user':user})
 
 
+def supprimer_photo(request,id):
+    photo=Photo.objects.get(id=id)
+    photo.delete()
+    user=request.user
+    return redirect('accueil-utilisateur', user.id)
+
 @login_required
 def accueil_utilisateur(request, id ):
     user=request.user
@@ -240,6 +246,11 @@ def profil_utilisateur(request, id) :
     ,'abonnes':abonnes, 'abonnements':abonnements,'programmes':programmes
     ,'programmes_technique':programmes_technique, 'programmes_puissance':programmes_puissance
     ,'programmes_endurance':programmes_endurance, 'programmes_autre':programmes_autre})
+
+
+
+
+
 
 
 
