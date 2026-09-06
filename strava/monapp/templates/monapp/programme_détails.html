@@ -3,6 +3,7 @@
 
 {% block extra_css %}
    <link rel="stylesheet" href="{% static 'monapp/programme_détails.css' %}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% load monapp.durée_format %}
@@ -22,15 +23,16 @@
 <br>
 
 {% if utilisateur == user %}
-   <a href="{% url 'ajouter-activité-programme' programme.id utilisateur.id %}">Utiliser ce programme</a>
+   <a style="text-decoration: none; padding-left: 10px; padding-right: 10px;" class="w3-border w3-round-xlarge" href="{% url 'ajouter-activité-programme' programme.id utilisateur.id %}">Utiliser ce programme</a>
    {% if programme.utilisateur %}
-   <a class="w3-blue" href="{% url 'modifier-programme' programme.id %}">Modifier le programme</a>
-   <a class="w3-red" href="{% url 'supprimer-programme' programme.id %}">Supprimer le programme</a>
+   <a style="text-decoration: none; padding-left: 10px; padding-right: 10px;" class="w3-blue w3-round-xlarge" href="{% url 'modifier-programme' programme.id %}"><i class="fa fa-gear"> Modifier le programme</i></a>
+   <a style="text-decoration: none; padding-left: 10px; padding-right: 10px;" class="w3-red w3-round-xlarge" href="{% url 'supprimer-programme' programme.id %}"><i class="fa fa-trash"> Supprimer le programme</i></a>
    {% endif %}
 {% endif %}
 
 {% if utilisateur != user %}
-<a class="w3-green w3-round-xlarge" style="text-decoration: none;" href="{% url 'copier-programme' programme.id %}">Copier</a>
+<a class="w3-blue w3-round-xlarge" style="text-decoration: none; padding-left: 10px; padding-right: 10px;" href="{% url 'copier-programme' programme.id %}">
+   <i class="fa fa-download">  Copier</i></a>
  {% endif %}
 {% endblock %}
 

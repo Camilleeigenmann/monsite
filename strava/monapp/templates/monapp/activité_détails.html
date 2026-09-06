@@ -3,6 +3,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'monapp/activité_détails.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% load monapp.durée_format %}
@@ -23,13 +24,16 @@
 <div>Cette activité a duré {{activité.durée|durée_format}}</div>
 <br><br>
 {% if user == utilisateur %}
-<a class="w3-blue" href="{% url 'modifier-activité' activité.id %}">Modifier l'activité</a>
-<a class="w3-red" href="{% url 'supprimer-activité' activité.id %}">Supprimer l'activité</a>
+<a class="w3-blue" href="{% url 'modifier-activité' activité.id %}"><i class="fa fa-gear"> Modifier l'activité</i></a>
+<a class="w3-red" href="{% url 'supprimer-activité' activité.id %}"><i class="fa fa-trash"> Supprimer l'activité</i></a>
 {% endif %}
 <br><br>
 {% if photos %}
     {% for photo in photos %}
+    <div class="w3-dropdown-hover">
     <img style="height: 150px; width: 150px;object-fit: cover;" src="{{photo.image.url}}">
+    <a class="w3-dropdown-content w3-button w3-red" style="text-decoration: none;" href="{% url 'supprimer-photo' photo.id %}">Supprimer</a>
+    </div>
     {% endfor %}
 {% else %}
     {% if user == utilisateur %}
@@ -37,6 +41,6 @@
     {% endif %}
 {% endif %}
 {% if user == utilisateur %}
-<div><a class="w3-button w3-border w3-black w3-text-white" style="text-decoration: none;" href="{% url 'ajouter-activite-photo' activité.id utilisateur.id %}">Lier une photo</a></div>
+<a class="w3-button w3-border w3-black w3-text-white" style="text-decoration: none;" href="{% url 'ajouter-activite-photo' activité.id utilisateur.id %}">Lier une photo</a>
 {% endif %}
 {% endblock %}

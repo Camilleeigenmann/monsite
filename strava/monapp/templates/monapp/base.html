@@ -2,19 +2,20 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+        <link rel="stylesheet" href="https://cloudflare.com">
         {% block extra_css %}{% endblock %} 
         <!-- pour permettre de lier un html à un css propre à lui -->
     </head>
-    <body style="padding-bottom: 50px;">
+    <body style="padding-bottom: 100px;">
         
         {% block content %}{% endblock %}
         {% if user.is_authenticated %}
         <footer class=" w3-bottom w3-text-white w3-bar" style=" display: flex;justify-content: space-between;" >
-            <a class="w3-button w3-bar-item w3-black w3-round-xlarge" href="{% url 'accueil-utilisateur' user.id %}">Accueil</a>
-            <a class="w3-button w3-bar-item w3-black w3-round-xlarge" href="{% url 'liste-activités' user.id %}">Activités</a>
-            <a class="w3-button w3-bar-item w3-black w3-round-xlarge" href="{% url 'liste-programmes' user.id %}">Bibliothèque de programme</a>
-            <a class="w3-buttom w3-bar-item w3-black w3-round-xlarge" style="text-decoration: none;" href="{% url 'liste-utilisateurs' %}">Suivre</a>
-            <a class="w3-button w3-bar-item w3-black w3-round-xlarge" href="{% url 'logout' %}">Se déconnecter</a>
+            <a class="w3-button w3-bar-item w3-black w3-round-xlarge"  href="{% url 'accueil-utilisateur' user.id %}"><i class="fa fa-home"> Accueil</i></a>
+            <a class="w3-button w3-bar-item w3-black w3-round-xlarge"  href="{% url 'liste-activités' user.id %}"><i class="fa fa-fire"> Activités</i></a>
+            <a class="w3-button w3-bar-item w3-black w3-round-xlarge"  href="{% url 'liste-programmes' user.id %}"><i class="fa fa-book"> Bibliothèque de programme</i></a>
+            <a class="w3-buttom w3-bar-item w3-black w3-round-xlarge"  href="{% url 'liste-utilisateurs' %}"><i class="fa fa-user"> Suivre</i></a>
+            <a class="w3-button w3-bar-item w3-black w3-round-xlarge"  href="{% url 'logout' %}"><i class="fa fa-arrow-right"> Se déconnecter</i></a>
         </footer>
         {% endif %}
     </body>
