@@ -1,10 +1,10 @@
-# Strava.grimpe
+# Grimp'mania
 
-Comme son nom l'indique, Strava.grimpe est un site dont le fonctionnement se rapproche de celle de l'application Strava, créé donc pour l'escalade.
+Grimp'mania est un site conçu spécialement pour l'escalade, permettant aux utilisateurs de suivre leurs entraînements et de partager leurs activités ou leurs programmes avec leurs abonnés.
 
 ## Fonctionnalités
 
-- La première fonctionnalité principale est la création l'enregistrement d'activités dans une liste ordonnées par date de publication. Ces activités contiennent une description, un but (selon ce que l'on veut tirer de l'entraînement, comme la puissance, l'endurance etc), un durée ainsi qu'un programme ou des photos ( les deux facultatifs ).
+- La première fonctionnalité principale est la création et l'enregistrement d'activités dans une liste ordonnées par date de publication. Ces activités contiennent une description, un but (selon ce que l'on veut tirer de l'entraînement, comme la puissance, l'endurance etc), une durée ainsi qu'un programme ou des photos ( les deux facultatifs ).
 
 - La seconde est la création de programmes. Certains programmes seront proposés par défaut et l'utilisateur pourra en créer lui-même. Ces programmes sont constitués d'un titre, d'une description, d'un but, d'une durée et éventuellement d'un nombre d'exercices
 
@@ -27,7 +27,6 @@ Suivez ces étapes une par une afin d'installer mon site
 
 ```bash
 git clone https://github.com/Camilleeigenmann/monsite.git
-cd monsite
 cd strava 
 ```
 
@@ -64,10 +63,29 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
+Le site sera accessible à :
+```bash
+http://127.0.0.1:8000/
+```
+
+## Administration
+Pour accéder à l'administration Django :
+```bash
+python manage.py createsuperuser
+```
+Puis rendez-vous sur:
+```bash
+http://127.0.0.1:8000/admin/
+```
+
 
 ## Outils
 
 -**Python**
 -[**Django**](https://docs.djangoproject.com/en/6.0/)
+-**HTML**
+-[**W3.CSS**](https://www.w3schools.com/w3css/)
 
+## Auteur
 
+Site créé par Camille Eigenmann

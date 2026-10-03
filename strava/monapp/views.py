@@ -406,13 +406,10 @@ def liste_activites_abo(request,id) :
     utilisateur=Utilisateur.objects.get(id=id)
     user=request.user
     abonnements=user.following.all()
-    activites=[]
-    for utilisateur in abonnements :
-        activites_utilisateur=Activité.objects.filter(utilisateur=utilisateur.id)
-        activites.extend(activites_utilisateur)
+    activites= Activité.objects.filter(utilisateur_id__in=abonnements.values_list('following_id', flat=True)).order_by('-date')
     activites=sorted(activites, key=lambda x: x.date, reverse=True)
-
     return render(request, 'monapp/liste_activites_abo.html', {'user':user,'activites':activites})
+    
 
 
 
@@ -455,7 +452,7 @@ def modifier_activité(request,id) :
             # mettre à jour l'activité déjà existante
             form.save() 
             # rediriger vers les détails de l'activité
-            return redirect('activité-details', activité.id)
+            return redirect('activité-détails', activité.id)
     else :
         form = forms.Ajouter_activité_form(instance=activité)
 

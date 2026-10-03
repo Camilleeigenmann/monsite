@@ -16,7 +16,7 @@
 <div>{{activité.description}}</div>
 <br>
 {% if activité.programme %}
-<div><a href="{% url 'programme-détails' programme.id utilisateur.id %}">Vous avez fait ce programme : {{programme.titre}}</a></div>
+<div><a href="{% url 'programme-détails' programme.id utilisateur.id %}">Programme inclus : {{programme.titre}}</a></div>
 <br>
 {% endif %}
 
