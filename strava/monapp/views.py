@@ -45,7 +45,7 @@ def login_page(request):
 def upload_profile(request,id):
     user=request.user
     utilisateur=Utilisateur.objects.get(id=id)
-    form=forms.UploadProfileForm(instance=utilisateur)
+    form=forms.UploadProfileForm(instance=utilisateur) #prend les données de l'utilisateur qui veut changer son profil
     if request.method=='POST' :
         form=forms.UploadProfileForm(request.POST,request.FILES, instance=utilisateur)
         if form.is_valid:
@@ -62,7 +62,7 @@ def ajouter_photo(request,id) :
         if form.is_valid:
             photo=form.save(commit=False)
             photo.utilisateur=utilisateur
-            photo.save()
+            photo.save() #plutôt que de demander un utilisateur dans la form, on le lie à la photo dans la view
             return redirect('accueil-utilisateur', utilisateur.id)
     else :
         form=forms.AjouterPhotoForm()
@@ -107,7 +107,8 @@ def accueil_utilisateur(request, id ):
     #prends uniquement les activités créées le mois se déroulant actuellement grâce à timezone.now().month/year
     # et date__year/date__month
     duree_totale_mois=activites_du_mois.aggregate(total=Sum('durée'))['total']
-    #fais la somme de la durée des activités du mois sous la forme d'un dictionnaire
+    #fais la somme de la durée des activités du mois sous la forme d'un dictionnaire dans la parenthèse 
+    # puis renvoie la valeur grâce à la clé total
 
     nb_activites_technique_mois=0
     nb_activites_puissance_mois=0
@@ -130,7 +131,7 @@ def accueil_utilisateur(request, id ):
 
     activites_annee=Activité.objects.filter(utilisateur_id=utilisateur.id,date__year=now.year)
     #prends uniquement les activités de l'année actuelle grâce à date__year et timezone.now()
-    duree_totale_annee=activites_annee.aggregate(total=Sum('durée'))['total']
+    duree_totale_annee=activites_annee.aggregate(total=Sum('durée'))['total'] #même chose que plus haut
 
     nb_activites_technique_annee=0
     nb_activites_puissance_annee=0
@@ -169,16 +170,17 @@ def accueil_utilisateur(request, id ):
 
 
 def liste_utilisateurs(request):
-    utilisateurs= Utilisateur.objects.all().order_by('username')
+    utilisateurs= Utilisateur.objects.all().order_by('username') # range les utilisateurs par ordre alphabétique
     user=request.user
     utilisateur=Utilisateur.objects.get(id=user.id)
     suivis=[]
     nonsuivis=[]
     for grimpeur in utilisateurs :
         if Utilisateurabonnements.objects.filter(follower=utilisateur.id, following=grimpeur.id).exists() :
-            suivis.append(grimpeur)
+            suivis.append(grimpeur) # vérifie s'il existe un lien entre l'utilisateur et le grimpeur en question grâce au modèle Uilisateurabonnements
+         #attention, ce n'est pas n'importe quel lien. L'utilisatuer doit etre le follower et le grimpeur en question celui qui est suivi donc le following
         else:
-            nonsuivis.append(grimpeur)
+            nonsuivis.append(grimpeur) # si non, alors le grimpeur n'est pas suivi
 
 
     return render(request, 'monapp/liste_utilisateurs.html', {'utilisateur': utilisateur,'user':user,'suivis':suivis ,'nonsuivis':nonsuivis})
@@ -190,8 +192,10 @@ def abonner(request, id):
     utilisateur=Utilisateur.objects.get(id=user.id)
     if utilisateur != utilisateur_cible :
         Utilisateurabonnements.objects.create(follower=utilisateur, following=utilisateur_cible)
+        # créé un lien où l'utilisateur_cible est celui qui est suivi et l'uilisateur l'abonné
+        # l'utilisateur s'abonne. (abonner est pas un nom de fonction très précis mais c'est trop tard pour changer ça)
 
-    utilisateurs= Utilisateur.objects.all().order_by('username')
+    utilisateurs= Utilisateur.objects.all().order_by('username') #après s'être abonné, on range à nouveau les utilisateurs car un autre est passé dans le camp des suivis
     suivis=[]
     nonsuivis=[]
     for grimpeur in utilisateurs :
@@ -209,7 +213,7 @@ def desabonner(request, id) :
     user= request.user
     utilisateur=Utilisateur.objects.get(id=user.id)
     Utilisateurabonnements.objects.filter(follower=utilisateur.id, following=utilisateur_cible.id ).delete()
-
+    # cette fois on supprime le lien puis on range à nouveau
     utilisateurs= Utilisateur.objects.all().order_by('username')
     suivis=[]
     nonsuivis=[]
