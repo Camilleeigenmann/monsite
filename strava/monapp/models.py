@@ -20,8 +20,8 @@ def validate_max_duration(value) :
         if value.total_seconds() > 8 * 3600 :
             raise ValidationError("La durée ne peut pas dépasser 8h") # donne un maximum de 8h aux programmes et à l'activité
 
-
-
+#je ne suis pas sûr d'avoir indiqué ma source car c'était au début du travail de maturité.
+#j'avais pas mal cherché et j'avais trouvé dans la documentation django en tapant validators dans la barre de recherche
 
 class Programme(models.Model) :
     titre= models.CharField(max_length=30)
@@ -87,7 +87,8 @@ class Photo(models.Model) :
 class Utilisateurabonnements(models.Model) :
     follower=models.ForeignKey(Utilisateur, related_name="following", on_delete=models.CASCADE)
     following=models.ForeignKey(Utilisateur, related_name="followers", on_delete=models.CASCADE)
-    created=models.DateTimeField(auto_now_add=True)
+    created=models.DateTimeField(auto_now_add=True) #pas nécessaire mais à l'avenir je pourrais indiquer quand on s'est abonné à telle personne
+    #ce ne serait pas important mais toujours ça de plus si je continue le projet
 
     class Meta:
         constraints=[models.UniqueConstraint(fields=["follower","following"], name="unique_follow")]

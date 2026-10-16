@@ -15,3 +15,5 @@ class ContainsNumberValidator :
     
     def get_help_text(self):
         return 'Votre mot de passe doit contenir au moins un chiffre'
+
+# tout ceci vient du tutoriel django sur la création d'une page de login

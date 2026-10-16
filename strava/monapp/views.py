@@ -234,7 +234,8 @@ def profil_utilisateur(request, id) :
     if Utilisateurabonnements.objects.filter(follower=utilisateur.id, following=utilisateur_cible.id).exists():
         suivi=True
     else:
-        suivi=False
+        suivi=False # True et False pour verifier si on est abonné ou pas au grimpeur à cause des restrictions lors d'un non-abonnement
+        # voir sur le fichier html correspondant
     
     abonnes=utilisateur_cible.followers.all().count()
     abonnements=utilisateur_cible.following.all().count()
@@ -267,13 +268,13 @@ def liste_programmes(request,id):
     programmes_technique=Programme.objects.filter(but='Technique',utilisateur__isnull=True)
     programmes_puissance=Programme.objects.filter(but='Puissance',utilisateur__isnull=True)
     programmes_endurance=Programme.objects.filter(but='Endurance',utilisateur__isnull=True)
-    programmes_autre=Programme.objects.filter(but='Autre',utilisateur__isnull=True)
+    programmes_autre=Programme.objects.filter(but='Autre',utilisateur__isnull=True) #programme sans utilisateurs donc programmes proposés par defaut pour chaque but
     
     programmescréés=Programme.objects.filter(utilisateur=id)
     programmescréés_technique=Programme.objects.filter(but='Technique',utilisateur_id=utilisateur.id)
     programmescréés_puissance=Programme.objects.filter(but='Puissance',utilisateur_id=utilisateur.id)
     programmescréés_endurance=Programme.objects.filter(but='Endurance',utilisateur_id=utilisateur.id)
-    programmescréés_autre=Programme.objects.filter(but='Autre',utilisateur_id=utilisateur.id)
+    programmescréés_autre=Programme.objects.filter(but='Autre',utilisateur_id=utilisateur.id) #programmes propres à l'utilisateur
     # pour classer les programmes en fonction de leurs but dans la page "liste_programmes"
     
     return render(request, 'monapp/liste_programmes.html', {'programmes':programmes, 'utilisateur':utilisateur,'user':user,'programmescréés':programmescréés,
@@ -300,7 +301,7 @@ def ajouter_activité_photo(request, id, utilisateur_id):
             photo=form.save(commit=False)
             photo.utilisateur=utilisateur
             photo.activite_liee=activite
-            photo.save()
+            photo.save() #on remplit ces champs directement dans la view car leurs valeurs est accessible d'ores et deja depuis la page des détails de l'activité
             return redirect('activité-détails',activite.id)
     else :
         form=forms.AjouterPhotoForm()
@@ -356,7 +357,7 @@ def modifier_programme(request,id) :
     if request.method =='POST' :
         form =forms.Créer_programme_form(request.POST,instance=programmecréé) # on pré-rempli un formulaire avec un programme perso déjà existant
         if form.is_valid :
-            # mettre à jour le programme créé déjà existante
+            # mettre à jour le programme créé déjà existant
             form.save() 
             # rediriger vers les détails du programme créé
             return redirect('programme-détails', programmecréé.id, programmecréé.utilisateur.id)
@@ -371,7 +372,7 @@ def supprimer_programme(request,id) :
     programmecréé= Programme.objects.get(id=id)
     utilisateur=programmecréé.utilisateur
     if request.method == 'POST' :
-        # supprimer le groupe de la base de donnée
+        # supprimer le programme de la base de donnée
         programmecréé.delete()
         return redirect( 'liste-programmes', utilisateur.id)
     return render(request, 'monapp/supprimer_programme.html', {'programmecréé': programmecréé, 'utilisateur':utilisateur,'user':user})
@@ -381,10 +382,10 @@ def supprimer_programme(request,id) :
 @login_required
 def copie_programme(request,id) :
     user=request.user
-    programme= Programme.objects.get(id=id)
-    programme.pk=None
-    programme.utilisateur=user
-    programme.save()
+    programme= Programme.objects.get(id=id) #on créé une variable avec les caractéristiques de celui recherché
+    programme.pk=None #on enlève l'id à cette variable pour la differencier de sa référence
+    programme.utilisateur=user #on change le détenteur du programme
+    programme.save() #on obtient d'un côté le programme originel avec son créateur et de l'autre une copie avec un autre utilisateur et une autre id
     return redirect('liste-programmes', user.id)
     
 
@@ -397,11 +398,11 @@ def copie_programme(request,id) :
 @login_required
 def liste_activités(request,id) :
     user=request.user
-    utilisateur=Utilisateur.objects.get(id=id) #user et utilisateur pour pouvorr mettre des restrictions si le user est un abonné
+    utilisateur=Utilisateur.objects.get(id=id) #user et utilisateur pour pouvoir mettre des restrictions si le user est un abonné
     #-> donc pas de possibilité d'ajouter des activités sur ce profil ou de modifier les activités
     activités=Activité.objects.filter(utilisateur=id).order_by('-date') #ordonner du plus récent au moins récent
     
-# les activités liés à cet utilisateur seront donc séléctionnées puis affichées (un seul dictionnaire sinon ça bug)
+
     return render(request, 'monapp/liste_activités.html', {'activités':activités , 'utilisateur': utilisateur,'user':user})
 
 
@@ -411,7 +412,14 @@ def liste_activites_abo(request,id) :
     user=request.user
     abonnements=user.following.all()
     activites= Activité.objects.filter(utilisateur_id__in=abonnements.values_list('following_id', flat=True)).order_by('-date')
-    activites=sorted(activites, key=lambda x: x.date, reverse=True)
+    #abonnements est la liste d'objets Utilisateursabonnements où l'utilisateur figure comme celui qui suit
+    #donc je ne peux pas juste prendre chaque objet de cette liste, car c'est encore une liste d'objets et non d'utilisateurs
+    # values.list  va donc aller chercher l'id du champ following pour chaque objet
+    #Or, cette liste d'id sera une liste de tuples contenants une id et non juste une liste d'id car values_list est fait pour renvoyer plusieurs données, soit un following et un follower par exemple
+    #Donc on utiliste flat=True pour créer une liste simple
+    #les activités correspondant à chaque id vont etre recuperées grâce à utilisateur_id__in
+    #puis finalement on range ces activités par date de création
+    #longue explication mais c'est la la fonction qui me semblait la plus technique de mon code même si elle reste assez basique
     return render(request, 'monapp/liste_activites_abo.html', {'user':user,'activites':activites})
     
 
@@ -422,7 +430,7 @@ def activité_détails(request,id):
     activité=Activité.objects.get(id=id)
     programme=activité.programme
     user=request.user
-    utilisateur=activité.utilisateur #même chose qu'en haut
+    utilisateur=activité.utilisateur 
     photos=Photo.objects.filter(utilisateur_id=utilisateur.id, activite_liee_id=activité.id).order_by('-date')
 
 

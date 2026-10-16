@@ -1,7 +1,7 @@
 from django import template
 from datetime import timedelta
 
-register=template.Library()
+register=template.Library()# permet d'utilisé des filtres personnalisés dans les templates
 
 @register.filter(name='durée_format')
 def durée_format(td) :
