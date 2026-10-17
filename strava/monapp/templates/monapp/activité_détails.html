@@ -42,5 +42,5 @@
 {% endif %}
 {% if user == utilisateur %}
 <a class="w3-button w3-border w3-black w3-text-white" style="text-decoration: none;" href="{% url 'ajouter-activite-photo' activité.id utilisateur.id %}">Lier une photo</a>
-{% endif %}
+{% endif %} <!--if user == utilisateur pour des restrictions si celui qui regarde l'activité n'est pas son créateur-->
 {% endblock %}

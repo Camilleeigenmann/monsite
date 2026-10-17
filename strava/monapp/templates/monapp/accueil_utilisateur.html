@@ -14,7 +14,7 @@
         <img class="w3-circle" style="height: 150px; width: 150px;object-fit: cover;" src="{{utilisateur.profile_photo.url}}" >
         {% else %}
         <img class="w3-circle" style="height: 150px; width: 150px;object-fit: cover;" src="https://www.svgrepo.com/show/452030/avatar-default.svg" >
-        {% endif %}
+        {% endif %} <!--si pas de photo de profil alors on met une photo par défaut -->
         <h3>{{utilisateur.get_username}}</h3>
         
     </div>
@@ -24,12 +24,12 @@
             <div class="w3-dropdown-content w3-border w3-bar-block">
                 {% for abonne in abonnes_dt %}
                 <div class="w3-container w3-flex w3-card">
-                {% if abonne.profile_photo %}
-                <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{{abonne.profile_photo.url}}"" >
-                {% else %}
-                <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="https://www.svgrepo.com/show/452030/avatar-default.svg">
-                {% endif %}
-                <a style="text-decoration: none;" class="w3-bar-item" href="{% url 'profil-utilisateur' abonne.id %}">{{abonne.get_username}}</a>
+                  {% if abonne.profile_photo %}
+                  <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{{abonne.profile_photo.url}}"" >
+                  {% else %}
+                  <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="https://www.svgrepo.com/show/452030/avatar-default.svg">
+                  {% endif %}
+                  <a style="text-decoration: none;" class="w3-bar-item" href="{% url 'profil-utilisateur' abonne.id %}">{{abonne.get_username}}</a>
                 </div>
                 {% endfor %}
             </div>
@@ -39,12 +39,12 @@
             <div class="w3-dropdown-content w3-border w3-bar-block">
                 {% for abonnement in abonnements_dt %}
                 <div class="w3-container w3-flex w3-card">
-                {% if abonne.profile_photo %}
-                <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{{abonne.profile_photo.url}}"" >
-                {% else %}
-                <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="https://www.svgrepo.com/show/452030/avatar-default.svg">
-                {% endif %}
-                <a class="w3-bar-item" style="text-decoration: none;" href="{% url 'profil-utilisateur' abonnement.id %}">{{abonnement.get_username}}</a>
+                  {% if abonne.profile_photo %}
+                  <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="{{abonne.profile_photo.url}}"" >
+                  {% else %}
+                  <img class="w3-circle" style="height: 40px; width: 40px;object-fit: cover;" src="https://www.svgrepo.com/show/452030/avatar-default.svg">
+                  {% endif %}
+                  <a class="w3-bar-item" style="text-decoration: none;" href="{% url 'profil-utilisateur' abonnement.id %}">{{abonnement.get_username}}</a>
                 </div>
                 {% endfor %}
             </div>
@@ -103,7 +103,7 @@
           <div >{{derniere_activite.date}}</div>
           <div>{{derniere_activite.but}}</div>
 
-          {% if derniere_activite.programme or derniere_activite.programmecréé  %}
+          {% if derniere_activite.programme  %}
           <div>Programme inclus</div>
           {% endif %}
      
@@ -117,7 +117,7 @@
     {% for photo in photos %}
     <div class="w3-dropdown-hover w3-bar-block">
     <img style="height: 150px; width: 150px;object-fit: cover;" src="{{photo.image.url}}">
-    {% if photo.activite_liee %}
+    {% if photo.activite_liee %} <!-- On avertit quand même l'utilisateur si la photo qu'il veut supprimer appartient à une activité-->
     <a class="w3-dropdown-content w3-button" style="text-decoration: none;" href="{% url 'activité-détails' photo.activite_liee.id %}">Aller à l'activité</a>
     {% else %}
     <a class="w3-dropdown-content w3-button w3-red" style="text-decoration: none;" href="{% url 'supprimer-photo' photo.id %}"><i class="fa fa-trash"> Supprimer</i></a>
