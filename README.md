@@ -17,12 +17,23 @@ Voici ce dont vous aurez besoin pour installer mon projet :
 - **Python** (La version 3.13.14 ou une plus récente)
 - **Django** 
 - **Un environnement virtuel**
-- **pip**(gère les paquets)
+- **pip**(gère les paquets et est normalement inclus en installant Python)
 
 ## Installation des prérequis
 
 Suivez ces étapes une par une afin d'installer mon site
 
+### 0.1 Installation de Python et de pip
+
+Avant de démarrer le code, vérifiez que Python est bien installé et que pip est bien inclus dedans.
+```bash
+python --version
+pip --version
+```
+Si cette première ligne ne fonctionne pas, alors tapez la suivante :
+```bash
+python3 --version
+```
 ### 1.Clonage du code
 
 ```bash
@@ -40,15 +51,22 @@ source venv/bin/activate
 Sur Windows
 ```bash
 python -m venv venv
-venv\Scripts\activate
+venv\Scripts\activate.bat
 ```
 
 ### 3. Installation de Django
 
 ```bash
-pip install django
+python -m pip install Django
 ```
-
+Puis vérifiez que celui ci est bien installé en tapant une de ces lignes:
+```bash
+django-admin --version
+```
+ou 
+```bash
+python -m django --version
+```
 ### 4. Stockage des paquets
 
 ```bash
