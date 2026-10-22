@@ -67,13 +67,8 @@ ou
 ```bash
 python -m django --version
 ```
-### 4. Stockage des paquets
 
-```bash
-pip install -r requirements.txt
-```
-
-### 5. Lancement du site
+### 4. Lancement du site
 
 ```bash
 cd strava
