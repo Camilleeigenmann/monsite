@@ -15,9 +15,10 @@ Grimp'mania est un site conçu spécialement pour l'escalade, permettant aux uti
 Voici ce dont vous aurez besoin pour installer mon projet :
 
 - **Python** (La version 3.13.14 ou une plus récente)
-- **Django** 
+- **Django** (J'ai utilisé la versin 6.0.4)
 - **Un environnement virtuel**
 - **pip**(gère les paquets et est normalement inclus en installant Python)
+-**Pillow**(pour ajouter des photos sur le site)
 
 ## Installation des prérequis
 
@@ -67,8 +68,12 @@ ou
 ```bash
 python -m django --version
 ```
+### 4. Installation de Pillow
+```bash
+pip install Pillow
+```
 
-### 4. Lancement du site
+### 5. Lancement du site
 
 ```bash
 cd strava

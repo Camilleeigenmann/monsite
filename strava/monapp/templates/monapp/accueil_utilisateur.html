@@ -114,16 +114,20 @@
     </div>
 <br><br><br>
 <h4>Vos photos :</h4>
-    {% for photo in photos %}
-    <div class="w3-dropdown-hover w3-bar-block">
-    <img style="height: 150px; width: 150px;object-fit: cover;" src="{{photo.image.url}}">
-    {% if photo.activite_liee %} <!-- On avertit quand même l'utilisateur si la photo qu'il veut supprimer appartient à une activité-->
-    <a class="w3-dropdown-content w3-button" style="text-decoration: none;" href="{% url 'activité-détails' photo.activite_liee.id %}">Aller à l'activité</a>
+    {% if photos %}
+      {% for photo in photos %}
+      <div class="w3-dropdown-hover w3-bar-block">
+      <img style="height: 150px; width: 150px;object-fit: cover;" src="{{photo.image.url}}">
+      {% if photo.activite_liee %} <!-- On avertit quand même l'utilisateur si la photo qu'il veut supprimer appartient à une activité-->
+      <a class="w3-dropdown-content w3-button" style="text-decoration: none;" href="{% url 'activité-détails' photo.activite_liee.id %}">Aller à l'activité</a>
+      {% else %}
+      <a class="w3-dropdown-content w3-button w3-red" style="text-decoration: none;" href="{% url 'supprimer-photo' photo.id %}"><i class="fa fa-trash"> Supprimer</i></a>
+      {% endif %}
+      </div>
+      {% endfor %}
     {% else %}
-    <a class="w3-dropdown-content w3-button w3-red" style="text-decoration: none;" href="{% url 'supprimer-photo' photo.id %}"><i class="fa fa-trash"> Supprimer</i></a>
+      <div>Vous n'avez pas enregistré de photos</div>
     {% endif %}
-    </div>
-    {% endfor %}
 <br>
 <br>
 <div><a class="w3-button w3-border w3-black w3-text-white w3-round-xlarge" style="text-decoration: none;" href="{% url 'ajouter-photo' utilisateur.id %}">Ajouter des photos</a> </div>
