@@ -6,13 +6,16 @@
    
 
  <body>
-     <h1>Grimp'mania</h1>
-     <form method="post">
+    
+    <h1 class="w3-center">Grimp'mania</h1>
+    <div class="w3-container w3-card w3-flex" style="flex-direction: column; align-items: center; object-fit: cover;">
+     <form method="post" class="w3-center">
        {{ form.as_p}}
        {% csrf_token %}
-       <button class="w3-button w3-blue w3-round-large" type="submit">Se connecter</button>
+       <button class="w3-button w3-black w3-round-large w3-text-white" type="submit">Se connecter</button>
      </form>
-     <p>Pas encore membre ? <a class="w3-text-blue" style="text-decoration: underline;" href="{% url 'signup' %}">Inscrivez-vous !</a></p>
- </body>
+     <p>Pas encore membre ? <a class="w3-text-brown" style="text-decoration: underline;" href="{% url 'signup' %}">Inscrivez-vous !</a></p>
+    </div>
+  </body>
     
 </html>

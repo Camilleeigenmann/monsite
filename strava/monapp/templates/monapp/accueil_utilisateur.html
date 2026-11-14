@@ -52,14 +52,14 @@
            
     </div>
     <br>
-    <div class="w3-button w3-border w3-black w3-text-white w3-round-large "><a style="text-decoration: none;" href="{% url 'upload-profile' utilisateur.id %}">Modifier</a></div>
+    <div class="w3-button w3-border w3-black w3-round-large w3-text-white"><a style="text-decoration: none;" href="{% url 'upload-profile' utilisateur.id %}">Modifier</a></div>
 
 </div>
 
 
 <br><br><br><br><br>
 <div class="w3-container w3-flex" style="gap:15px">
-    <div class="w3-container w3-card w3-round">
+    <div class="w3-container w3-card w3-round w3-brown">
         <h2>Vos activités du mois ({{mois_actuel}}) :</h2>
         {% if activites_du_mois %}
         <div> Vous avez fait {{activites_du_mois|length}} activités ce mois-ci, dont :</div>
@@ -75,7 +75,7 @@
 
         
     </div>
-    <div class="w3-container w3-card w3-round">
+    <div class="w3-container w3-card w3-round w3-brown">
         <h2><i class="fa fa-calendar">  Vos activités de l'année ({{annee_actuelle}}):</i></h2>
         {% if activites_annee %}
         <div> Vous avez fait {{activites_annee|length}} activités cette année, dont:</div>
@@ -97,7 +97,7 @@
         {% if activites_utilisateur %}
         <div>Votre dernière activité :</div>
         <br>
-        <div style="width:200px;" class=" w3-container w3-center w3-card w3-hover-white w3-blue">
+        <div style="width:200px;" class=" w3-container w3-center w3-card w3-hover-white w3-sand">
         <a class="w3-button" style="text-decoration: none;" href="{% url 'activité-détails' derniere_activite.id %}">
           <div >{{utilisateur.prénom}} {{utilisateur.nom}}</div>
           <div >{{derniere_activite.date}}</div>

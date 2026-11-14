@@ -31,7 +31,7 @@
 {% endif %}
 
 {% if utilisateur != user %}
-<a class="w3-blue w3-round-xlarge" style="text-decoration: none; padding-left: 10px; padding-right: 10px;" href="{% url 'copier-programme' programme.id %}">
+<a class="w3-black w3-round-xlarge w3-text-white" style="text-decoration: none; padding-left: 10px; padding-right: 10px;" href="{% url 'copier-programme' programme.id %}">
    <i class="fa fa-download">  Copier</i></a>
  {% endif %}
 {% endblock %}

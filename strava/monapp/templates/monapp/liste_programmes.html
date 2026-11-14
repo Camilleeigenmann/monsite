@@ -12,15 +12,15 @@
 
 {% block content %}
     <header > 
-    <h1>Voici la liste des programmes d'entraînement</h1>
+    <h1 class="w3-center">Programmes</h1>
     <a style="position:fixed; top:0%; right: 0%;" class="w3-button w3-black w3-text-white w3-circle w3-card " href="{% url 'créer-programme' utilisateur.id %}">+</a>
     </header>
-    <h2>Nos programmes :</h2>
+    <h2>Programmes proposés:</h2>
 
     <h4>Technique </h4>
     <div class="w3-container w3-flex" style="overflow-x: auto;white-space: nowrap;">
     {% for programme_technique in programmes_technique %}   
-        <div class="w3-container w3-yellow" style="margin: 10px;">
+        <div class="w3-container w3-sand" style="margin: 10px;">
         <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programme_technique.id utilisateur.id  %}">
             <div class="w3-center" >{{programme_technique.titre}}</div>
             <div class="w3-center" >{{programme_technique.durée|durée_format}}</div>
@@ -31,7 +31,7 @@
     <h4>Puissance </h4>
     <div class="w3-container w3-flex" style="overflow-x: auto;white-space: nowrap;">
     {% for programme_puissance in programmes_puissance %}     
-        <div class="w3-container w3-red" style="margin: 10px; ">
+        <div class="w3-container w3-khaki" style="margin: 10px; ">
         <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programme_puissance.id utilisateur.id %}">
             <div class="w3-center">{{programme_puissance.titre}}</div>
             <div class="w3-center">{{programme_puissance.durée|durée_format}}</div>
@@ -42,7 +42,7 @@
     <h4>Endurance</h4>
     <div class="w3-container w3-flex" style="overflow-x: auto;white-space: nowrap;">
     {% for programme_endurance in programmes_endurance %}     
-        <div class="w3-container w3-blue" style="margin: 10px; ">
+        <div class="w3-container w3-brown" style="margin: 10px; ">
         <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programme_endurance.id utilisateur.id %}">
             <div class="w3-center">{{programme_endurance.titre}}</div>
             <div class="w3-center">{{programme_endurance.durée|durée_format}}</div>
@@ -53,7 +53,7 @@
     <h4>Autre </h4>
     <div class="w3-container w3-flex" style="overflow-x: auto;white-space: nowrap;">
     {% for programme_autre in programmes_autre %}        
-        <div class="w3-container w3-purple" style="margin: 10px; ">
+        <div class="w3-container w3-dark-grey" style="margin: 10px; ">
         <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programme_autre.id utilisateur.id %}">
             <div class="w3-center">{{programme_autre.titre}}</div>
             <div class="w3-center">{{programme_autre.durée|durée_format}}</div>
@@ -63,14 +63,14 @@
     
 
     <br>
-    <h2>Mes programmes :</h2> <!-- Ranger les programmes en fonction de leur but-->
+    <h2>Mes programmes:</h2> <!-- Ranger les programmes en fonction de leur but-->
     {% if programmescréés %}
 
         {% if programmescréés_technique %}
             <h4>Technique </h4>
             <div class="w3-container w3-flex" style="overflow-x: auto;white-space: nowrap;">
             {% for programmecréé_technique in programmescréés_technique %}       
-                <div class="w3-container w3-yellow" style="margin: 10px; ">
+                <div class="w3-container w3-sand" style="margin: 10px; ">
                 <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programmecréé_technique.id utilisateur.id %}">
                     <div class="w3-center">{{programmecréé_technique.titre}}</div>
                     <div class="w3-center">{{programmecréé_technique.durée|durée_format}}</div>
@@ -84,7 +84,7 @@
             <h4>Puissance </h4>
             <div class="w3-container w3-flex" style="overflow-x: auto;white-space: nowrap;">
             {% for programmecréé_puissance in programmescréés_puissance %}   
-                <div class="w3-container w3-red" style="margin: 10px; ">
+                <div class="w3-container w3-khaki" style="margin: 10px; ">
                 <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programmecréé_puissance.id utilisateur.id %}">
                     <div class="w3-center">{{programmecréé_puissance.titre}}</div>
                     <div class="w3-center">{{programmecréé_puissance.durée|durée_format}}</div>
@@ -98,7 +98,7 @@
             <h4>Endurance</h4> 
             <div class="w3-container w3-flex " style="overflow-x: auto;white-space: nowrap;">
             {% for programmecréé_endurance in programmescréés_endurance %}                                           
-                <div class="w3-container  w3-blue" style="margin: 10px;text-decoration: none; ">
+                <div class="w3-container  w3-brown" style="margin: 10px;text-decoration: none; ">
                 <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programmecréé_endurance.id utilisateur.id %}">
                     <div class="w3-center">{{programmecréé_endurance.titre}}</div>
                     <div class="w3-center " >{{programmecréé_endurance.durée|durée_format}}</div>
@@ -112,7 +112,7 @@
             <h4>Autre </h4>
             <div class="w3-container w3-flex" style="overflow-x: auto;white-space: nowrap;">
             {% for programmecréé_autre in programmescréés_autre %}                                                
-                <div class="w3-container w3-purple" style="margin: 10px; ">
+                <div class="w3-container w3-dark-grey" style="margin: 10px; ">
                 <a class="w3-button" style="text-decoration: none;" href="{% url 'programme-détails' programmecréé_autre.id utilisateur.id %}">
                     <div class="w3-center">{{programmecréé_autre.titre}}</div>
                     <div class="w3-center">{{programmecréé_autre.durée|durée_format}}</div>
