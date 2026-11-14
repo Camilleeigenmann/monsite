@@ -24,8 +24,8 @@
 <div>Cette activité a duré {{activité.durée|durée_format}}</div>
 <br><br>
 {% if user == utilisateur %}
-<a class="w3-blue" href="{% url 'modifier-activité' activité.id %}"><i class="fa fa-gear"> Modifier l'activité</i></a>
-<a class="w3-red" href="{% url 'supprimer-activité' activité.id %}"><i class="fa fa-trash"> Supprimer l'activité</i></a>
+<a class="w3-black w3-text-white w3-round-xlarge" href="{% url 'modifier-activité' activité.id %}"><i class="fa fa-gear"> Modifier l'activité</i></a>
+<a class="w3-dark-grey w3-round-xlarge" href="{% url 'supprimer-activité' activité.id %}"><i class="fa fa-trash"> Supprimer l'activité</i></a>
 {% endif %}
 <br><br>
 {% if photos %}
@@ -40,7 +40,8 @@
         <div>Vous n'avez aucune photo liée à l'activité</div>
     {% endif %}
 {% endif %}
+<br>
 {% if user == utilisateur %}
-<a class="w3-button w3-border w3-black w3-text-white" style="text-decoration: none;" href="{% url 'ajouter-activite-photo' activité.id utilisateur.id %}">Lier une photo</a>
+<a class="w3-button w3-border w3-sand w3-round-xlarge" style="text-decoration: none;" href="{% url 'ajouter-activite-photo' activité.id utilisateur.id %}">Lier une photo</a>
 {% endif %} <!--if user == utilisateur pour des restrictions si celui qui regarde l'activité n'est pas son créateur-->
 {% endblock %}
