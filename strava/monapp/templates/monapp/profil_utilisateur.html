@@ -38,8 +38,8 @@
 
 {% if suivi == True %}
 <header class=" w3-top w3-bar" style=" display: flex;justify-content: space-between;" >
-    <div><a class="w3-button w3-bar-item w3-text-red" href="{% url 'profil-utilisateur' utilisateur_cible.id %}">Profil</a></div>
-    <div><a class="w3-button w3-bar-item w3-text-red" href="{% url 'liste-activités' utilisateur_cible.id %}">Activités</a></div>
+    <div><a class="w3-button w3-bar-item " href="{% url 'profil-utilisateur' utilisateur_cible.id %}">Profil</a></div>
+    <div><a class="w3-button w3-bar-item " href="{% url 'liste-activités' utilisateur_cible.id %}">Activités</a></div>
 </header>
 <div class="w3-container w3-flex " style="margin-top: 50px;">
     
